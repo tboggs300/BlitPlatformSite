@@ -186,6 +186,8 @@ function createComponent(mesh, meshIcon) {
   const hideShow = document.createElement("button");
   hideShow.className = "hideShow show";
   hideShow.addEventListener("click", (e) => {
+    alert("hideshow");
+    e.preventDefault();
     if (mesh.isEnabled()) {
       e.target.className = "hideShow hide";
       mesh.setEnabled(false);
@@ -224,6 +226,7 @@ function createComponent(mesh, meshIcon) {
   // objectCompoenetContainer.appendChild(boundingBoxCheckBtn);
 
   objectCompoenetContainer.addEventListener("click", (event) => {
+    alert("objectComponent");
     switch (event.ctrlKey) {
       case true:
         if (mesh.showBoundingBox) {

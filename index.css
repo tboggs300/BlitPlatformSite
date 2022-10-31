@@ -58,18 +58,101 @@ header {
   align-items: center;
 }
 
+/* Actions */
+
+.actions {
+  background: #cccccc41;
+  grid-area: actions;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.header-actions {
+  width: 100%;
+  display: grid;
+  grid-template-areas: "create transform operate";
+  grid-template-columns: 50% 25% 25%;
+  font-family: "Poppins", sans-serif;
+  background: #eaeaea5f;
+}
+
+.create {
+  grid-area: create;
+  display: flex;
+  justify-content: space-around;
+}
+
+.transform {
+  grid-area: transform;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.operate {
+  grid-area: operate;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.styled-button {
+  width: 4rem;
+  font-size: medium;
+  padding: 6px 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  transition: 300ms;
+  background-color: #885af8;
+  color: white;
+  border-color: rgb(255, 255, 255);
+  box-shadow: #885af8 0px 0px 5px 0px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.styled-button:hover {
+  cursor: pointer;
+  background-color: #7744f8;
+  color: white;
+  border-color: white;
+}
+
+.upload-button {
+  width: 8rem;
+  font-size: medium;
+  padding: 6px 10px;
+  transition: 300ms;
+  background-color: #885af8;
+  color: white;
+  border-color: rgb(255, 255, 255);
+  box-shadow: #885af8 0px 0px 8px 0px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.upload-button:hover {
+  cursor: pointer;
+  background-color: #875af8ec;
+  color: white;
+  border-color: white;
+}
+
+.uploadIcon {
+  background-image: url("./assets/uploadIcon.png");
+  height: 20px;
+  width: 20px;
+}
+
 /* Scene Explorer */
 .scene-explorer {
   background: white;
   grid-area: scene-explorer;
-}
-
-.actions {
-  background: gainsboro;
-  grid-area: actions;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .sidebar-elements {
@@ -91,8 +174,8 @@ header {
 
 .objectInTheScene {
   display: grid;
-  grid-template-areas: "objIcon objName hideShow boundingBox";
-  grid-template-columns: 10% 70% 10% 10%;
+  grid-template-areas: "objIcon objName hideShow";
+  grid-template-columns: 15% 70% 15%;
   border-radius: 0.5rem;
   padding: 7px;
 }
@@ -127,6 +210,7 @@ header {
 }
 
 .hideShow {
+  z-index: 10;
   grid-area: hideShow;
   height: 100%;
   width: 100%;
@@ -150,94 +234,7 @@ header {
   background-image: url("./assets/hide.png");
 }
 
-.selectMaterial {
-  grid-area: selectMaterial;
-}
-
-.header-actions {
-  width: 100%;
-  display: grid;
-  grid-template-areas: "create transform operate";
-  grid-template-columns: 50% 25% 25%;
-  font-family: "Poppins", sans-serif;
-  background: #eaeaea5f;
-}
-
-.create {
-  grid-area: create;
-  display: flex;
-  justify-content: space-around;
-  padding-top: 5px;
-}
-
-.transform {
-  grid-area: transform;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.operate {
-  grid-area: operate;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Sphere */
-
-.styled-button {
-  width: 4rem;
-  font-size: medium;
-  padding: 6px 10px;
-  transition: 300ms;
-  background-color: #885af8;
-  color: white;
-  border-color: rgb(255, 255, 255);
-  box-shadow: #885af8 0px 0px 8px 0px;
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.styled-button:hover {
-  cursor: pointer;
-  background-color: #875af8ec;
-  color: white;
-  border-color: white;
-}
-
-.upload-button {
-  width: 8rem;
-  font-size: medium;
-  padding: 6px 10px;
-  transition: 300ms;
-  background-color: #885af8;
-  color: white;
-  border-color: rgb(255, 255, 255);
-  box-shadow: #885af8 0px 0px 8px 0px;
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.upload-button:hover {
-  cursor: pointer;
-  background-color: #875af8ec;
-  color: white;
-  border-color: white;
-}
-
-.uploadIcon {
-  background-image: url("./assets/uploadIcon.png");
-  height: 20px;
-  width: 20px;
-}
-
 /* --- Context Menu : Right Click on Object in left Panel --- */
-
 .wrapper {
   position: absolute;
   visibility: hidden;
@@ -316,4 +313,8 @@ header {
 .material:hover .material-menu {
   opacity: 1;
   pointer-events: auto;
+}
+
+.selectMaterial {
+  grid-area: selectMaterial;
 }
