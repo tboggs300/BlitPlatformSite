@@ -34,7 +34,7 @@
       </header>
 
       <!-- Scene Explorer -->
-      <aside>
+      <aside class="scene-explorer">
         <h3 style="padding-left: 1rem">Objects</h3>
         <div class="sidebar-elements">
           <p class="empty-scene">Empty Scene</p>
@@ -42,48 +42,47 @@
       </aside>
 
       <!-- Create - Transform - Operate -->
-      <section>
-        <div class="header-actions">
-          <div class="create">
-            <div style="display: grid; justify-items: center">
-              <div class="upload-button">
-                <i class="icon uploadIcon"></i>
-                <p style="font-size: 14px; margin: 0px">Upload Mesh</p>
-              </div>
-              <p style="font-size: 12px; margin: 2px">Import CAD</p>
+
+      <div class="actions">
+        <div class="create">
+          <div style="display: grid; justify-items: center">
+            <div class="upload-button">
+              <i class="icon uploadIcon"></i>
+              <p style="font-size: 14px; margin: 0px">Upload Mesh</p>
             </div>
-
-            <!-- <div class="dividerV"></div> -->
-
-            <div style="display: grid; justify-items: center">
-              <div style="display: flex; justify-content: space-between">
-                <div class="sphere-button">
-                  <!-- <i class="icon sphereIcon"></i> -->
-                  <p style="font-size: 14px; margin: 0px">Sphere</p>
-                </div>
-                <div class="cube-button">
-                  <!-- <i class="icon cubeIcon"></i> -->
-                  <p style="font-size: 14px; margin: 0px">Cube</p>
-                </div>
-                <div class="cylinder-button">
-                  <!-- <i class="icon cylinderIcon"></i> -->
-                  <p style="font-size: 14px; margin: 0px">Cylinder</p>
-                </div>
-              </div>
-              <p style="font-size: 12px; margin: 2px">Create Shape</p>
-            </div>
-
-            <!-- <input hidden type="checkbox" class="debug-switcher" value="disable">Debug Mode</input>  -->
+            <p style="font-size: 12px; margin: 2px">Import CAD</p>
           </div>
 
-          <div class="transform">transform</div>
+          <!-- <div class="dividerV"></div> -->
 
-          <div class="operate">operate</div>
+          <div style="display: grid; justify-items: center">
+            <div style="display: flex; justify-content: space-between">
+              <div id="sphere-button" class="styled-button">
+                <!-- <i class="icon sphereIcon"></i> -->
+                <p style="font-size: 14px; margin: 0px">Sphere</p>
+              </div>
+              <div id="cube-button" class="styled-button">
+                <!-- <i class="icon cubeIcon"></i> -->
+                <p style="font-size: 14px; margin: 0px">Cube</p>
+              </div>
+              <div id="cylinder-button" class="styled-button">
+                <!-- <i class="icon cylinderIcon"></i> -->
+                <p style="font-size: 14px; margin: 0px">Cylinder</p>
+              </div>
+            </div>
+            <p style="font-size: 12px; margin: 2px">Create Shape</p>
+          </div>
+
+          <!-- <input hidden type="checkbox" class="debug-switcher" value="disable">Debug Mode</input>  -->
         </div>
-      </section>
+
+        <div class="transform">transform</div>
+
+        <div class="operate">operate</div>
+      </div>
 
       <!-- Scene -->
-      <main>
+      <main class="scene-container">
         <canvas></canvas>
       </main>
     </div>

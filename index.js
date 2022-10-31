@@ -184,8 +184,7 @@ function createComponent(mesh, meshIcon) {
 
   // Toggle Visivility
   const hideShow = document.createElement("button");
-  // hideShow.id = mesh.id;
-  hideShow.className = "hideShow";
+  hideShow.className = "hideShow show";
   hideShow.addEventListener("click", (e) => {
     if (mesh.isEnabled()) {
       e.target.className = "hideShow hide";
@@ -468,7 +467,7 @@ function createComponent(mesh, meshIcon) {
 
 $(document).ready(function () {
   let sphereButtonClicks = 0;
-  $(".sphere-button").click(function () {
+  $("#sphere-button").click(function () {
     $(".empty-scene").hide();
     const mesh = createShape("sphere", sphereButtonClicks);
     sphereButtonClicks += 1;
@@ -477,7 +476,7 @@ $(document).ready(function () {
   });
 
   let cubeButtonclicks = 0;
-  $(".cube-button").click(function () {
+  $("#cube-button").click(function () {
     $(".empty-scene").hide();
     const mesh = createShape("cube", cubeButtonclicks);
     cubeButtonclicks += 1;
@@ -485,7 +484,7 @@ $(document).ready(function () {
   });
 
   let cylinderButtonclicks = 0;
-  $(".cylinder-button").click(function () {
+  $("#cylinder-button").click(function () {
     $(".empty-scene").hide();
     const mesh = createShape("cylinder", cylinderButtonclicks);
     cylinderButtonclicks += 1;

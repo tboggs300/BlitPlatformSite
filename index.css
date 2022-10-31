@@ -5,77 +5,28 @@
 body {
   margin: 0;
   padding: 0;
-  /* background-color: white; */
   font-family: "Poppins", sans-serif;
   position: fixed;
   height: 100%;
   width: 100%;
-  cursor: default;
 }
 
 .grid {
   height: 100%;
   display: grid;
-  /* grid-gap: 5px; */
   grid-template-areas:
     "brand header"
-    "divider divider"
-    "aside section"
-    "aside main";
-  grid-template-columns: 22% 78%;
-  grid-template-rows: 8% 0.3% 12% 80%;
-  font-family: "Poppins", sans-serif;
+    "scene-explorer actions"
+    "scene-explorer scene-container";
+  grid-template-columns: 20% 80%;
+  grid-template-rows: 8% 12% 80%;
 }
 
-aside {
-  background: white;
-  grid-area: aside;
-}
-
-.brand {
-  background: cadetblue;
-  grid-area: "brand";
-  display: flex;
-  font-family: "Roboto", sans-serif;
-  justify-content: flex-start;
-  padding-left: 1rem;
-  align-items: center;
-}
-h4 {
-  color: white;
-  /* #109cf1 */
-  font-weight: 100;
-}
-strong {
-  font-weight: 900;
-}
-
-.divider {
-  background: #ebeff2;
-  grid-area: divider;
-  width: 100%;
-  border-bottom: 3px solid #dddde1;
-}
-
-header {
-  background: cadetblue;
-  color: white;
-  grid-area: header;
-}
-
-section {
-  background: white;
-  grid-area: section;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-main {
+/* Scene */
+.scene-container {
   background: #e5e5e5;
-  grid-area: main;
+  grid-area: scene-container;
 }
-
 canvas {
   z-index: 0;
   position: absolute;
@@ -89,38 +40,36 @@ canvas {
   );
 }
 
-.dividerV {
-  background: #1093f7;
-  width: 100%;
-  height: 100%;
-  border-left: 3px solid #dddde1;
+/* Modeling - Mesh .. */
+header {
+  background: cadetblue;
+  color: white;
+  grid-area: header;
 }
 
-/* radial-gradient(
-    circle,
-    #282c349c 0%,
-    #282c34ca 35%,
-    #282c34 100%
-  ); */
+/* Brand - Blit Platform */
+.brand {
+  background: cadetblue;
+  grid-area: "brand";
+  display: flex;
+  font-family: "Roboto", sans-serif;
+  justify-content: flex-start;
+  padding-left: 1rem;
+  align-items: center;
+}
 
-/* 
-header {
-  position: absolute;
-  width: 100%;
-  height: 2.5rem;
-  z-index: 1011;
-  background-color: rgba(38, 115, 208, 0);
+/* Scene Explorer */
+.scene-explorer {
+  background: white;
+  grid-area: scene-explorer;
+}
+
+.actions {
+  background: gainsboro;
+  grid-area: actions;
   display: flex;
   justify-content: center;
-} */
-
-.scene-explorer-container {
-  position: absolute;
-  z-index: 1012;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  background-color: rgb(227, 156, 75);
-  height: 100%;
+  align-items: center;
 }
 
 .sidebar-elements {
@@ -133,7 +82,6 @@ header {
   min-height: 1.5rem;
   max-height: 24.5rem;
   overflow-y: auto;
-  /* overflow-y: scroll; */
 }
 
 .sidebar-elements p {
@@ -156,34 +104,21 @@ header {
 
 .objIcon {
   grid-area: objIcon;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
-
 .cubeIcon {
-  background-image: url("./assets/sceneExolorer/cube.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
+  background-image: url("./assets/cube.png");
 }
-
 .cylinderIcon {
-  background-image: url("./assets/sceneExolorer/cylinder.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
+  background-image: url("./assets/cylinder.png");
 }
-
 .sphereIcon {
-  background-image: url("./assets/sceneExolorer/sphere.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
+  background-image: url("./assets/sphere.png");
 }
-
 .meshIcon {
-  background-image: url("./assets/sceneExolorer/mesh.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
+  background-image: url("./assets/mesh.png");
 }
 
 .objName {
@@ -196,7 +131,6 @@ header {
   height: 100%;
   width: 100%;
   background: transparent;
-  background-image: url("./assets/sceneExolorer/show.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -209,96 +143,16 @@ header {
 }
 
 .show {
-  background-image: url("./assets/sceneExolorer/show.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  border-width: 0px;
+  background-image: url("./assets/show.png");
 }
 
 .hide {
-  background-image: url("./assets/sceneExolorer/hide.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  border-width: 0px;
-}
-
-/* delete Mesh Button */
-.deleteMeshBtn {
-  grid-area: deleteMeshBtn;
-  height: 100%;
-  width: 100%;
-  padding-left: 4px;
-  background: transparent;
-  background-image: url("./assets/sceneExolorer/delete.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  border-width: 0px;
-}
-
-.deleteMeshBtn:hover {
-  border-radius: 5px;
-  background-color: #cacacc;
-  cursor: pointer;
-}
-
-.boundingBox {
-  grid-area: boundingBox;
-  height: 100%;
-  width: 15px;
-  display: flex;
-  justify-self: center;
-  background: transparent;
-  background-image: url("./assets/sceneExolorer/unselected.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  border-width: 0px;
-}
-.boundingBox:hover {
-  background-color: #cacacc;
-  cursor: pointer;
-}
-
-.showBoundingBox {
-  background: transparent;
-  background-image: url("./assets/sceneExolorer/selected.png");
-  width: 15px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  border-width: 0px;
-}
-
-.hideBoundingBox {
-  background: transparent;
-  background-image: url("./assets/sceneExolorer/unselected.png");
-  width: 15px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  border-width: 0px;
+  background-image: url("./assets/hide.png");
 }
 
 .selectMaterial {
   grid-area: selectMaterial;
 }
-
-/* .hideShow:hover {
-  background: #c2c1c1;
-} */
-
-/* .delete {
-  grid-area: delete;
-  background-image: url("./assets/sceneExolorer/delete.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-} */
-
-/* ---------------------------- */
 
 .header-actions {
   width: 100%;
@@ -331,7 +185,8 @@ header {
 }
 
 /* Sphere */
-.sphere-button {
+
+.styled-button {
   width: 4rem;
   font-size: medium;
   padding: 6px 10px;
@@ -346,53 +201,7 @@ header {
   align-items: center;
 }
 
-.sphere-button:hover {
-  cursor: pointer;
-  background-color: #875af8ec;
-  color: white;
-  border-color: white;
-}
-
-/* Cube */
-
-.cube-button {
-  width: 4rem;
-  font-size: medium;
-  padding: 6px 10px;
-  transition: 300ms;
-  background-color: #885af8;
-  color: white;
-  border-color: rgb(255, 255, 255);
-  box-shadow: #885af8 0px 0px 8px 0px;
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.cube-button:hover {
-  cursor: pointer;
-  background-color: #875af8ec;
-  color: white;
-  border-color: white;
-}
-
-.cylinder-button {
-  width: 4rem;
-  font-size: medium;
-  padding: 6px 10px;
-  transition: 300ms;
-  background-color: #885af8;
-  color: white;
-  border-color: rgb(255, 255, 255);
-  box-shadow: #885af8 0px 0px 8px 0px;
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.cylinder-button:hover {
+.styled-button:hover {
   cursor: pointer;
   background-color: #875af8ec;
   color: white;
@@ -422,48 +231,12 @@ header {
 }
 
 .uploadIcon {
-  background-image: url("./assets/sceneExolorer/uploadIcon.png");
+  background-image: url("./assets/uploadIcon.png");
   height: 20px;
   width: 20px;
 }
 
-.delete-button {
-  font-size: medium;
-  transition: 300ms;
-  background-color: rgb(255, 255, 255);
-  color: #282c34;
-  border-color: rgb(255, 255, 255);
-}
-
-.delete-button:hover {
-  background-color: #282c34;
-  color: white;
-  border-color: white;
-}
-
-.delete-button:disabled {
-  background-color: #eaeaea;
-  color: rgb(185, 183, 183);
-  border-color: white;
-}
-
-.delete-button:enabled {
-  cursor: pointer;
-}
-
-.debug-switcher {
-  position: relative;
-}
-
-.span_link {
-  height: 100%;
-  width: 100%;
-  left: 0;
-  top: 0;
-  z-index: 1;
-}
-
-/* Object Context Menu */
+/* --- Context Menu : Right Click on Object in left Panel --- */
 
 .wrapper {
   position: absolute;
@@ -516,20 +289,8 @@ header {
   background-size: contain;
 }
 
-.materialIcon {
-  background-image: url("./assets/sceneExolorer/mesh.png");
-}
-
-.deleteIcon {
-  background-image: url("./assets/sceneExolorer/delete.png");
-}
-
 .arrowIcon {
-  background-image: url("./assets/contextMenu/right-arrow.png");
-}
-
-.selectIcon {
-  background-image: url("./assets/sceneExolorer/select.png");
+  background-image: url("./assets/right-arrow.png");
 }
 
 .menu .material {
