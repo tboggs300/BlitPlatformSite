@@ -1,0 +1,558 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+  /* background-color: white; */
+  font-family: "Poppins", sans-serif;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  cursor: default;
+}
+
+.grid {
+  height: 100%;
+  display: grid;
+  /* grid-gap: 5px; */
+  grid-template-areas:
+    "brand header"
+    "divider divider"
+    "aside section"
+    "aside main";
+  grid-template-columns: 22% 78%;
+  grid-template-rows: 8% 0.3% 12% 80%;
+  font-family: "Poppins", sans-serif;
+}
+
+aside {
+  background: white;
+  grid-area: aside;
+}
+
+.brand {
+  background: cadetblue;
+  grid-area: "brand";
+  display: flex;
+  font-family: "Roboto", sans-serif;
+  justify-content: flex-start;
+  padding-left: 1rem;
+  align-items: center;
+}
+h4 {
+  color: white;
+  /* #109cf1 */
+  font-weight: 100;
+}
+strong {
+  font-weight: 900;
+}
+
+.divider {
+  background: #ebeff2;
+  grid-area: divider;
+  width: 100%;
+  border-bottom: 3px solid #dddde1;
+}
+
+header {
+  background: cadetblue;
+  color: white;
+  grid-area: header;
+}
+
+section {
+  background: white;
+  grid-area: section;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  background: #e5e5e5;
+  grid-area: main;
+}
+
+canvas {
+  z-index: 0;
+  position: absolute;
+  width: -webkit-fill-available;
+  height: -webkit-fill-available;
+  background: radial-gradient(
+    circle,
+    #282c349c 0%,
+    #282c34ca 35%,
+    #282c34 100%
+  );
+}
+
+.dividerV {
+  background: #1093f7;
+  width: 100%;
+  height: 100%;
+  border-left: 3px solid #dddde1;
+}
+
+/* radial-gradient(
+    circle,
+    #282c349c 0%,
+    #282c34ca 35%,
+    #282c34 100%
+  ); */
+
+/* 
+header {
+  position: absolute;
+  width: 100%;
+  height: 2.5rem;
+  z-index: 1011;
+  background-color: rgba(38, 115, 208, 0);
+  display: flex;
+  justify-content: center;
+} */
+
+.scene-explorer-container {
+  position: absolute;
+  z-index: 1012;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  background-color: rgb(227, 156, 75);
+  height: 100%;
+}
+
+.sidebar-elements {
+  background: #cccccc41;
+  display: grid;
+  grid-gap: 0.7rem;
+  border-radius: 10px;
+  margin: 0rem 0.7rem;
+  padding: 0.5rem;
+  min-height: 1.5rem;
+  max-height: 24.5rem;
+  overflow-y: auto;
+  /* overflow-y: scroll; */
+}
+
+.sidebar-elements p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.objectInTheScene {
+  display: grid;
+  grid-template-areas: "objIcon objName hideShow boundingBox";
+  grid-template-columns: 10% 70% 10% 10%;
+  border-radius: 0.5rem;
+  padding: 7px;
+}
+
+.objectInTheScene:hover {
+  background: #dfdfdf;
+  cursor: pointer;
+}
+
+.objIcon {
+  grid-area: objIcon;
+}
+
+.cubeIcon {
+  background-image: url("./assets/sceneExolorer/cube.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.cylinderIcon {
+  background-image: url("./assets/sceneExolorer/cylinder.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.sphereIcon {
+  background-image: url("./assets/sceneExolorer/sphere.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.meshIcon {
+  background-image: url("./assets/sceneExolorer/mesh.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.objName {
+  grid-area: objName;
+  padding-left: 5px;
+}
+
+.hideShow {
+  grid-area: hideShow;
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  background-image: url("./assets/sceneExolorer/show.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-width: 0px;
+}
+.hideShow:hover {
+  border-radius: 5px;
+  background-color: #cacacc;
+  cursor: pointer;
+}
+
+.show {
+  background-image: url("./assets/sceneExolorer/show.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-width: 0px;
+}
+
+.hide {
+  background-image: url("./assets/sceneExolorer/hide.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-width: 0px;
+}
+
+/* delete Mesh Button */
+.deleteMeshBtn {
+  grid-area: deleteMeshBtn;
+  height: 100%;
+  width: 100%;
+  padding-left: 4px;
+  background: transparent;
+  background-image: url("./assets/sceneExolorer/delete.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-width: 0px;
+}
+
+.deleteMeshBtn:hover {
+  border-radius: 5px;
+  background-color: #cacacc;
+  cursor: pointer;
+}
+
+.boundingBox {
+  grid-area: boundingBox;
+  height: 100%;
+  width: 15px;
+  display: flex;
+  justify-self: center;
+  background: transparent;
+  background-image: url("./assets/sceneExolorer/unselected.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-width: 0px;
+}
+.boundingBox:hover {
+  background-color: #cacacc;
+  cursor: pointer;
+}
+
+.showBoundingBox {
+  background: transparent;
+  background-image: url("./assets/sceneExolorer/selected.png");
+  width: 15px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-width: 0px;
+}
+
+.hideBoundingBox {
+  background: transparent;
+  background-image: url("./assets/sceneExolorer/unselected.png");
+  width: 15px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-width: 0px;
+}
+
+.selectMaterial {
+  grid-area: selectMaterial;
+}
+
+/* .hideShow:hover {
+  background: #c2c1c1;
+} */
+
+/* .delete {
+  grid-area: delete;
+  background-image: url("./assets/sceneExolorer/delete.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+} */
+
+/* ---------------------------- */
+
+.header-actions {
+  width: 100%;
+  display: grid;
+  grid-template-areas: "create transform operate";
+  grid-template-columns: 50% 25% 25%;
+  font-family: "Poppins", sans-serif;
+  background: #eaeaea5f;
+}
+
+.create {
+  grid-area: create;
+  display: flex;
+  justify-content: space-around;
+  padding-top: 5px;
+}
+
+.transform {
+  grid-area: transform;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.operate {
+  grid-area: operate;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Sphere */
+.sphere-button {
+  width: 4rem;
+  font-size: medium;
+  padding: 6px 10px;
+  transition: 300ms;
+  background-color: #885af8;
+  color: white;
+  border-color: rgb(255, 255, 255);
+  box-shadow: #885af8 0px 0px 8px 0px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.sphere-button:hover {
+  cursor: pointer;
+  background-color: #875af8ec;
+  color: white;
+  border-color: white;
+}
+
+/* Cube */
+
+.cube-button {
+  width: 4rem;
+  font-size: medium;
+  padding: 6px 10px;
+  transition: 300ms;
+  background-color: #885af8;
+  color: white;
+  border-color: rgb(255, 255, 255);
+  box-shadow: #885af8 0px 0px 8px 0px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.cube-button:hover {
+  cursor: pointer;
+  background-color: #875af8ec;
+  color: white;
+  border-color: white;
+}
+
+.cylinder-button {
+  width: 4rem;
+  font-size: medium;
+  padding: 6px 10px;
+  transition: 300ms;
+  background-color: #885af8;
+  color: white;
+  border-color: rgb(255, 255, 255);
+  box-shadow: #885af8 0px 0px 8px 0px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.cylinder-button:hover {
+  cursor: pointer;
+  background-color: #875af8ec;
+  color: white;
+  border-color: white;
+}
+
+.upload-button {
+  width: 8rem;
+  font-size: medium;
+  padding: 6px 10px;
+  transition: 300ms;
+  background-color: #885af8;
+  color: white;
+  border-color: rgb(255, 255, 255);
+  box-shadow: #885af8 0px 0px 8px 0px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.upload-button:hover {
+  cursor: pointer;
+  background-color: #875af8ec;
+  color: white;
+  border-color: white;
+}
+
+.uploadIcon {
+  background-image: url("./assets/sceneExolorer/uploadIcon.png");
+  height: 20px;
+  width: 20px;
+}
+
+.delete-button {
+  font-size: medium;
+  transition: 300ms;
+  background-color: rgb(255, 255, 255);
+  color: #282c34;
+  border-color: rgb(255, 255, 255);
+}
+
+.delete-button:hover {
+  background-color: #282c34;
+  color: white;
+  border-color: white;
+}
+
+.delete-button:disabled {
+  background-color: #eaeaea;
+  color: rgb(185, 183, 183);
+  border-color: white;
+}
+
+.delete-button:enabled {
+  cursor: pointer;
+}
+
+.debug-switcher {
+  position: relative;
+}
+
+.span_link {
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+
+/* Object Context Menu */
+
+.wrapper {
+  position: absolute;
+  visibility: hidden;
+  align-self: center;
+  background: white;
+  width: 200px;
+  border-radius: 7px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+}
+
+.wrapper .menu {
+  padding: 7px 10px;
+}
+
+.menu .item {
+  list-style: none;
+  background-color: white;
+  margin-bottom: 3px;
+  border-radius: 4px;
+  padding: 6px;
+}
+.menu .item:hover {
+  background-color: #eaeaea;
+  cursor: pointer;
+  transition: 0.1s ease;
+}
+
+.kamalqraytou {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu .deleteItem:hover {
+  background-color: #d32929;
+  color: white;
+  cursor: pointer;
+  transition: 0.1s ease;
+}
+
+.icon {
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.materialIcon {
+  background-image: url("./assets/sceneExolorer/mesh.png");
+}
+
+.deleteIcon {
+  background-image: url("./assets/sceneExolorer/delete.png");
+}
+
+.arrowIcon {
+  background-image: url("./assets/contextMenu/right-arrow.png");
+}
+
+.selectIcon {
+  background-image: url("./assets/sceneExolorer/select.png");
+}
+
+.menu .material {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.material .material-menu {
+  position: absolute;
+  background-color: white;
+  width: 150px;
+  top: 4px;
+  left: 190px;
+  padding: 7px 10px;
+  border-radius: 7px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.1s ease;
+}
+
+.material:hover .material-menu {
+  opacity: 1;
+  pointer-events: auto;
+}

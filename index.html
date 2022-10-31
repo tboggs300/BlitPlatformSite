@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+    <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+    <script src="https://cdn.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+    <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="grid">
+      <!-- Brand -->
+      <div class="brand">
+        <h3 style="color: white; padding-left: 1px">
+          <strong>Blit </strong>Platform
+        </h3>
+      </div>
+      <div class="divider"></div>
+
+      <!-- Big Actions - Conditional Rendering -->
+      <header style="display: flex; justify-content: space-around">
+        <p>Dashbord</p>
+        <p>Modeling</p>
+        <p>Mesh</p>
+        <p>Simulation</p>
+        <p>Result</p>
+      </header>
+
+      <!-- Scene Explorer -->
+      <aside>
+        <h3 style="padding-left: 1rem">Objects</h3>
+        <div class="sidebar-elements">
+          <p class="empty-scene">Empty Scene</p>
+        </div>
+      </aside>
+
+      <!-- Create - Transform - Operate -->
+      <section>
+        <div class="header-actions">
+          <div class="create">
+            <div style="display: grid; justify-items: center">
+              <div class="upload-button">
+                <i class="icon uploadIcon"></i>
+                <p style="font-size: 14px; margin: 0px">Upload Mesh</p>
+              </div>
+              <p style="font-size: 12px; margin: 2px">Import CAD</p>
+            </div>
+
+            <!-- <div class="dividerV"></div> -->
+
+            <div style="display: grid; justify-items: center">
+              <div style="display: flex; justify-content: space-between">
+                <div class="sphere-button">
+                  <!-- <i class="icon sphereIcon"></i> -->
+                  <p style="font-size: 14px; margin: 0px">Sphere</p>
+                </div>
+                <div class="cube-button">
+                  <!-- <i class="icon cubeIcon"></i> -->
+                  <p style="font-size: 14px; margin: 0px">Cube</p>
+                </div>
+                <div class="cylinder-button">
+                  <!-- <i class="icon cylinderIcon"></i> -->
+                  <p style="font-size: 14px; margin: 0px">Cylinder</p>
+                </div>
+              </div>
+              <p style="font-size: 12px; margin: 2px">Create Shape</p>
+            </div>
+
+            <!-- <input hidden type="checkbox" class="debug-switcher" value="disable">Debug Mode</input>  -->
+          </div>
+
+          <div class="transform">transform</div>
+
+          <div class="operate">operate</div>
+        </div>
+      </section>
+
+      <!-- Scene -->
+      <main>
+        <canvas></canvas>
+      </main>
+    </div>
+  </body>
+  <script src="./index.js"></script>
+</html>
+
+<!-- <input type="checkbox" class="debug-switcher" value="disable">Debug Mode</input> -->
