@@ -48,9 +48,15 @@ function createScene(engine) {
     BABYLON.Vector3.Zero(),
     scene
   );
-  camera.attachControl(canvas, true);
+  camera.zoomToMouseLocation = true;
+  camera.wheelDeltaPercentage = 0.03;
+
+  // Enable mouse wheel inputs.
+  // camera.inputs.addMouseWheel();
+
   camera.setPosition(new BABYLON.Vector3(-1, 0.5, 1)); // initial
   camera.setTarget(BABYLON.Vector3.Zero());
+  camera.attachControl(canvas, true);
   setCamera(camera);
 
   const ambient = new BABYLON.HemisphericLight(
