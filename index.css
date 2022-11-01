@@ -181,8 +181,16 @@ header {
 }
 
 .objectInTheScene:hover {
-  background: #dfdfdf;
+  /* background: #dfdfdf; */
   cursor: pointer;
+}
+
+.objectUnselected {
+  background: #cccccc41;
+}
+
+.objectSelected {
+  background: #e54040bd;
 }
 
 .objIcon {
@@ -207,10 +215,11 @@ header {
 .objName {
   grid-area: objName;
   padding-left: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .hideShow {
-  z-index: 10;
   grid-area: hideShow;
   height: 100%;
   width: 100%;
@@ -228,10 +237,12 @@ header {
 
 .show {
   background-image: url("./assets/show.png");
+  padding: 0px;
 }
 
 .hide {
   background-image: url("./assets/hide.png");
+  padding: 0px;
 }
 
 /* --- Context Menu : Right Click on Object in left Panel --- */
@@ -317,4 +328,8 @@ header {
 
 .selectMaterial {
   grid-area: selectMaterial;
+}
+
+.selectIcon {
+  background-image: url("./assets/select.png");
 }

@@ -122,21 +122,44 @@ window.addEventListener("resize", function () {
   engine.resize();
 });
 
-// ------------------------ Create - Delete - Deubg --------------------//
+// ------------------------ Create - Delete  --------------------//
 
-let meshesInTheScene = [];
-var pickedMeshes = [];
+$(document).ready(function () {
+  let sphereButtonClicks = 0;
+  $("#sphere-button").click(function () {
+    $(".empty-scene").hide();
+    const mesh = createShape("sphere", sphereButtonClicks);
+    sphereButtonClicks += 1;
 
-const getNumberOfPickedMeshes = () => {
-  var numberOfPickedMeshes = 0;
-  meshesInTheScene.forEach((mesh) => {
-    if (mesh.showBoundingBox) {
-      numberOfPickedMeshes += 1;
-    }
+    createComponent(mesh, "sphereIcon");
   });
-  return numberOfPickedMeshes;
-};
 
+  let cubeButtonclicks = 0;
+  $("#cube-button").click(function () {
+    $(".empty-scene").hide();
+    const mesh = createShape("cube", cubeButtonclicks);
+    cubeButtonclicks += 1;
+    createComponent(mesh, "cubeIcon");
+  });
+
+  let cylinderButtonclicks = 0;
+  $("#cylinder-button").click(function () {
+    $(".empty-scene").hide();
+    const mesh = createShape("cylinder", cylinderButtonclicks);
+    cylinderButtonclicks += 1;
+    createComponent(mesh, "cylinderIcon");
+  });
+
+  // Upload Button
+  $(".upload-button").click(function () {
+    // ----- Uploading the Mesh -------
+    importSTLFiles();
+
+    // ------ Mesh Visibility ---------
+  });
+});
+
+// --------------------------- Shapes -------------------------------------//
 function createShape(meshType, buttonsClicks) {
   let mesh = 0;
   switch (meshType) {
@@ -168,9 +191,81 @@ function createShape(meshType, buttonsClicks) {
   return mesh;
 }
 
+// -------------------------- STL File ------------------------------------//
+function importSTLFiles() {
+  // scene.dispose();
+  let input = document.createElement("input");
+  input.type = "file";
+  input.accept = ".stl";
+  input.multiple = true;
+
+  let loadStatus = "hello";
+
+  input.onchange = (_) => {
+    // you can use this method to get file and perform respective operations
+    let file = input.files[0];
+    let fileName = file.name.split(".")[0];
+    console.log(fileName);
+
+    let numberUploadedFiles = input.files.length;
+
+    const ext = "." + file.name.split(".").pop().toLowerCase(); //ext|exts
+
+    if (ext !== ".stl") {
+      alert(ext + " file format is not supported! Please enter an STL File");
+      return 0;
+    } else {
+      // alert("you uploaded " + numberUploadedFiles + " files");
+    }
+
+    const url = URL.createObjectURL(file);
+    loadStatus = loadMesh(fileName, url, ext, 1);
+  };
+  input.click();
+}
+function loadMesh(fileName, url, extension, s) {
+  BABYLON.Scene;
+  BABYLON.SceneLoader.ImportMesh(
+    "",
+    "",
+    url,
+    scene,
+    function (newMeshes) {
+      const mesh = newMeshes[0];
+      newMeshes[0].name = fileName;
+      newMeshes[0].id = fileName;
+      newMeshes[0].scaling = new BABYLON.Vector3(s, s, s);
+      newMeshes[0].rotation = new BABYLON.Vector3(0, 0, 0);
+      newMeshes[0].position = new BABYLON.Vector3(0, 0, 0);
+      newMeshes[0].material = new BABYLON.NormalMaterial("currentMesh", scene);
+      frameCamera(1.5, newMeshes[0]);
+
+      $(".empty-scene").hide();
+      mesh.material = new BABYLON.NormalMaterial(fileName, scene);
+      if (getNumberOfPickedMeshes() > 0) {
+        mesh.visibility = 0.5;
+      }
+      createComponent(mesh, "meshIcon");
+    },
+    null,
+    null,
+    extension
+  );
+}
+
+function getNumberOfPickedMeshes() {
+  var numberOfPickedMeshes = 0;
+  scene.meshes.forEach((mesh) => {
+    if (mesh.showBoundingBox) {
+      numberOfPickedMeshes += 1;
+    }
+  });
+  return numberOfPickedMeshes;
+}
+
 function createComponent(mesh, meshIcon) {
   const objectCompoenetContainer = document.createElement("div");
-  objectCompoenetContainer.className = "objectInTheScene ";
+  objectCompoenetContainer.className = "objectInTheScene";
   objectCompoenetContainer.id = mesh.id;
 
   // Object Icon and Name
@@ -185,127 +280,56 @@ function createComponent(mesh, meshIcon) {
   // Toggle Visivility
   const hideShow = document.createElement("button");
   hideShow.className = "hideShow show";
+  hideShow.title = "hide";
   hideShow.addEventListener("click", (e) => {
-    alert("hideshow");
-    e.preventDefault();
+    e.stopPropagation(); // clicked div inside another clickable div
     if (mesh.isEnabled()) {
       e.target.className = "hideShow hide";
+      hideShow.title = "show";
       mesh.setEnabled(false);
     } else {
       e.target.className = "hideShow show";
+      hideShow.title = "hide";
       mesh.setEnabled(true);
     }
   });
   objectCompoenetContainer.appendChild(hideShow);
 
-  // Toggle bounding box
-  // const boundingBoxCheckBtn = document.createElement("button");
-  // boundingBoxCheckBtn.id = mesh.id;
-  // boundingBoxCheckBtn.className = "boundingBox";
-  // boundingBoxCheckBtn.addEventListener("click", (e) => {
-  //   if (mesh.showBoundingBox) {
-  //     e.target.className = "boundingBox hideBoundingBox";
-  //     mesh.showBoundingBox = false;
-  //   } else {
-  //     e.target.className = "boundingBox showBoundingBox";
-  //     mesh.showBoundingBox = true;
-  //   }
-
-  //   var numberOfPickedMeshes = getNumberOfPickedMeshes();
-
-  //   meshesInTheScene.forEach((mesh, index) => {
-  //     if (mesh.showBoundingBox === true) {
-  //       mesh.visibility = 1;
-  //     } else if (mesh.showBoundingBox === false && numberOfPickedMeshes == 0) {
-  //       mesh.visibility = 1;
-  //     } else if (mesh.showBoundingBox === false && numberOfPickedMeshes > 0) {
-  //       mesh.visibility = 0.5;
-  //     }
-  //   });
-  // });
-  // objectCompoenetContainer.appendChild(boundingBoxCheckBtn);
-
+  // Toggle Bounding Box
   objectCompoenetContainer.addEventListener("click", (event) => {
-    alert("objectComponent");
-    switch (event.ctrlKey) {
-      case true:
-        if (mesh.showBoundingBox) {
-          mesh.showBoundingBox = false;
-          scene.meshes.forEach((mesh) => {
-            if (mesh.showBoundingBox) {
-              mesh.visibility = 1;
-            }
-          });
-        } else {
-          scene.meshes.forEach((mesh) => {
-            if (mesh.showBoundingBox == false) {
-              mesh.visibility = 0.5;
-            }
-          });
-          mesh.showBoundingBox = true;
+    if (mesh.showBoundingBox) {
+      mesh.showBoundingBox = false;
+      if (event.ctrlKey == false) {
+        scene.meshes.forEach((mesh) => {
           mesh.visibility = 1;
-        }
-        break;
-      case false:
-        if (mesh.showBoundingBox) {
+        });
+      }
+    } else {
+      if (event.ctrlKey == false) {
+        scene.meshes.forEach((mesh) => {
           mesh.showBoundingBox = false;
-          scene.meshes.forEach((mesh) => {
-            mesh.visibility = 1;
-          });
-        } else {
-          scene.meshes.forEach((mesh) => {
-            mesh.showBoundingBox = false;
-            mesh.visibility = 0.5;
-          });
-          mesh.visibility = 1;
-          mesh.showBoundingBox = true;
-        }
+          mesh.visibility = 0.5;
+        });
+      }
+      mesh.showBoundingBox = true;
+      mesh.visibility = 1;
     }
-    // if (event.ctrlKey) {
-    //   var numberOfPickedMeshes = getNumberOfPickedMeshes();
-
-    //   meshesInTheScene.forEach((mesh, index) => {
-    //     if (mesh.showBoundingBox === true) {
-    //       mesh.visibility = 1;
-    //     } else if (
-    //       mesh.showBoundingBox === false &&
-    //       numberOfPickedMeshes == 0
-    //     ) {
-    //       mesh.visibility = 1;
-    //     } else if (mesh.showBoundingBox === false && numberOfPickedMeshes > 0) {
-    //       mesh.visibility = 0.5;
-    //     }
-    //   });
-    // } else {
-    //   if (mesh.showBoundingBox) {
-    //     mesh.showBoundingBox = false;
-    //     scene.meshes.forEach((mesh) => {
-    //       mesh.visibility = 1;
-    //     });
-    //   } else {
-    //     scene.meshes.forEach((mesh) => {
-    //       mesh.showBoundingBox = false;
-    //       mesh.visibility = 0.5;
-    //     });
-    //     mesh.visibility = 1;
-    //     mesh.showBoundingBox = true;
-    //   }
-    // }
-
-    // var numberOfPickedMeshes = getNumberOfPickedMeshes();
-
-    // meshesInTheScene.forEach((mesh, index) => {
-    //   if (mesh.showBoundingBox === true) {
-    //     mesh.visibility = 1;
-    //   } else if (mesh.showBoundingBox === false && numberOfPickedMeshes == 0) {
-    //     mesh.visibility = 1;
-    //   } else if (mesh.showBoundingBox === false && numberOfPickedMeshes > 0) {
-    //     mesh.visibility = 0.5;
-    //   }
-    // });
+    scene.meshes.forEach((mesh) => {
+      // If no mesh is selected
+      if (mesh.showBoundingBox === false && getNumberOfPickedMeshes() == 0) {
+        mesh.visibility = 1;
+      }
+      // If at least one mesh is already selected
+      else if (
+        mesh.showBoundingBox === false &&
+        getNumberOfPickedMeshes() > 0
+      ) {
+        mesh.visibility = 0.5;
+      }
+    });
   });
 
-  // ------------------- Context Menu ------------------
+  // ---------------- Right Click Event - Context Menu ------------------
   const wrapper = document.createElement("div");
   wrapper.className = "wrapper";
 
@@ -445,124 +469,22 @@ function createComponent(mesh, meshIcon) {
     console.log(objectCompoenetContainer.id);
     mesh.dispose();
     $("#" + objectCompoenetContainer.id).remove();
-    const meshArrayIndex = meshesInTheScene.indexOf(mesh);
-    meshesInTheScene.splice(meshArrayIndex, 1);
+    const meshArrayIndex = scene.meshes.indexOf(mesh);
+    scene.meshes.splice(meshArrayIndex, 1);
 
     if (getNumberOfPickedMeshes() == 0) {
-      meshesInTheScene.forEach((mesh) => {
+      scene.meshes.forEach((mesh) => {
         mesh.visibility = 1;
       });
     }
-    if (meshesInTheScene == 0) {
+    if (scene.meshes == 0) {
       $(".empty-scene").show();
     }
   });
 
   document.addEventListener("click", (e) => {
     wrapper.style.visibility = "hidden";
-    // scene.meshes.forEach((mesh) => {
-    //   mesh.showBoundingBox = false;
-    // });
   });
 
-  meshesInTheScene.push(mesh);
-}
-
-$(document).ready(function () {
-  let sphereButtonClicks = 0;
-  $("#sphere-button").click(function () {
-    $(".empty-scene").hide();
-    const mesh = createShape("sphere", sphereButtonClicks);
-    sphereButtonClicks += 1;
-
-    createComponent(mesh, "sphereIcon");
-  });
-
-  let cubeButtonclicks = 0;
-  $("#cube-button").click(function () {
-    $(".empty-scene").hide();
-    const mesh = createShape("cube", cubeButtonclicks);
-    cubeButtonclicks += 1;
-    createComponent(mesh, "cubeIcon");
-  });
-
-  let cylinderButtonclicks = 0;
-  $("#cylinder-button").click(function () {
-    $(".empty-scene").hide();
-    const mesh = createShape("cylinder", cylinderButtonclicks);
-    cylinderButtonclicks += 1;
-    createComponent(mesh, "cylinderIcon");
-  });
-
-  // Upload Button
-  $(".upload-button").click(function () {
-    // ----- Uploading the Mesh -------
-    importSTLFiles();
-
-    // ------ Mesh Visibility ---------
-  });
-});
-
-// ---------------------------Upload STL Files------------------------------------//
-function importSTLFiles() {
-  // scene.dispose();
-  let input = document.createElement("input");
-  input.type = "file";
-  input.accept = ".stl";
-  input.multiple = true;
-
-  let loadStatus = "hello";
-
-  input.onchange = (_) => {
-    // you can use this method to get file and perform respective operations
-    let file = input.files[0];
-    let fileName = file.name.split(".")[0];
-    console.log(fileName);
-
-    let numberUploadedFiles = input.files.length;
-
-    const ext = "." + file.name.split(".").pop().toLowerCase(); //ext|exts
-
-    if (ext !== ".stl") {
-      alert(ext + " file format is not supported! Please enter an STL File");
-      return 0;
-    } else {
-      // alert("you uploaded " + numberUploadedFiles + " files");
-    }
-
-    const url = URL.createObjectURL(file);
-    loadStatus = loadMesh(fileName, url, ext, 1);
-  };
-  input.click();
-}
-
-// --------------------------Load the Mesh to The scene-------------------------------------//
-function loadMesh(fileName, url, extension, s) {
-  BABYLON.Scene;
-  BABYLON.SceneLoader.ImportMesh(
-    "",
-    "",
-    url,
-    scene,
-    function (newMeshes) {
-      const mesh = newMeshes[0];
-      newMeshes[0].name = fileName;
-      newMeshes[0].id = fileName;
-      newMeshes[0].scaling = new BABYLON.Vector3(s, s, s);
-      newMeshes[0].rotation = new BABYLON.Vector3(0, 0, 0);
-      newMeshes[0].position = new BABYLON.Vector3(0, 0, 0);
-      newMeshes[0].material = new BABYLON.NormalMaterial("currentMesh", scene);
-      frameCamera(1.5, newMeshes[0]);
-
-      $(".empty-scene").hide();
-      mesh.material = new BABYLON.NormalMaterial(fileName, scene);
-      if (getNumberOfPickedMeshes() > 0) {
-        mesh.visibility = 0.5;
-      }
-      createComponent(mesh, "meshIcon");
-    },
-    null,
-    null,
-    extension
-  );
+  scene.meshes.push(mesh);
 }
