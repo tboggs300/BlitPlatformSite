@@ -122,10 +122,9 @@ window.addEventListener("resize", function () {
   engine.resize();
 });
 
-// ------------------------ Create - Delete  --------------------//
-
+// ---> Event Listener to Upload STL, Create Shape Buttons
 $(document).ready(function () {
-  let sphereButtonClicks = 0;
+  let sphereButtonClicks = 0; // for position and naming purpose
   $("#sphere-button").click(function () {
     $(".empty-scene").hide();
     const mesh = createShape("sphere", sphereButtonClicks);
@@ -150,16 +149,12 @@ $(document).ready(function () {
     createComponent(mesh, "cylinderIcon");
   });
 
-  // Upload Button
   $(".upload-button").click(function () {
-    // ----- Uploading the Mesh -------
-    importSTLFiles();
-
-    // ------ Mesh Visibility ---------
+    importSTLFile();
   });
 });
 
-// --------------------------- Shapes -------------------------------------//
+// Create Shapes : Sphere, Cube, Cylinder --------------//
 function createShape(meshType, buttonsClicks) {
   let mesh = 0;
   switch (meshType) {
@@ -191,8 +186,8 @@ function createShape(meshType, buttonsClicks) {
   return mesh;
 }
 
-// -------------------------- STL File ------------------------------------//
-function importSTLFiles() {
+// STL File ------------------------------------//
+function importSTLFile() {
   // scene.dispose();
   let input = document.createElement("input");
   input.type = "file";
@@ -253,85 +248,9 @@ function loadMesh(fileName, url, extension, s) {
   );
 }
 
-function getNumberOfPickedMeshes() {
-  var numberOfPickedMeshes = 0;
-  scene.meshes.forEach((mesh) => {
-    if (mesh.showBoundingBox) {
-      numberOfPickedMeshes += 1;
-    }
-  });
-  return numberOfPickedMeshes;
-}
-
-function createComponent(mesh, meshIcon) {
-  const objectCompoenetContainer = document.createElement("div");
-  objectCompoenetContainer.className = "objectInTheScene";
-  objectCompoenetContainer.id = mesh.id;
-
-  // Object Icon and Name
-  const objIcon = document.createElement("p");
-  objIcon.className = `objIcon ${meshIcon}`;
-  const objName = document.createElement("p");
-  objName.innerText = mesh.name;
-  objName.className = "objName";
-  objectCompoenetContainer.appendChild(objIcon);
-  objectCompoenetContainer.appendChild(objName);
-
-  // Toggle Visivility
-  const hideShow = document.createElement("button");
-  hideShow.className = "hideShow show";
-  hideShow.title = "hide";
-  hideShow.addEventListener("click", (e) => {
-    e.stopPropagation(); // clicked div inside another clickable div
-    if (mesh.isEnabled()) {
-      e.target.className = "hideShow hide";
-      hideShow.title = "show";
-      mesh.setEnabled(false);
-    } else {
-      e.target.className = "hideShow show";
-      hideShow.title = "hide";
-      mesh.setEnabled(true);
-    }
-  });
-  objectCompoenetContainer.appendChild(hideShow);
-
-  // Toggle Bounding Box
-  objectCompoenetContainer.addEventListener("click", (event) => {
-    if (mesh.showBoundingBox) {
-      mesh.showBoundingBox = false;
-      if (event.ctrlKey == false) {
-        scene.meshes.forEach((mesh) => {
-          mesh.visibility = 1;
-        });
-      }
-    } else {
-      if (event.ctrlKey == false) {
-        scene.meshes.forEach((mesh) => {
-          mesh.showBoundingBox = false;
-          mesh.visibility = 0.5;
-        });
-      }
-      mesh.showBoundingBox = true;
-      mesh.visibility = 1;
-    }
-    scene.meshes.forEach((mesh) => {
-      // If no mesh is selected
-      if (mesh.showBoundingBox === false && getNumberOfPickedMeshes() == 0) {
-        mesh.visibility = 1;
-      }
-      // If at least one mesh is already selected
-      else if (
-        mesh.showBoundingBox === false &&
-        getNumberOfPickedMeshes() > 0
-      ) {
-        mesh.visibility = 0.5;
-      }
-    });
-  });
-
-  // ---------------- Right Click Event - Context Menu ------------------
-  const wrapper = document.createElement("div");
-  wrapper.className = "wrapper";
+function createObjectContextMenu(mesh, objectCompoenetContainer) {
+  const objectContextMenu = document.createElement("div");
+  objectContextMenu.className = "wrapper";
 
   const menu = document.createElement("ul");
   menu.className = "menu";
@@ -432,59 +351,138 @@ function createComponent(mesh, meshIcon) {
   // --------------- Delete ---------------
   const itemDelete = document.createElement("li");
   itemDelete.className = `item deleteItem ${mesh.id}`;
-
-  console.log(itemDelete.className);
   const deleteIcon = document.createElement("i");
   deleteIcon.className = "icon deleteIcon";
   const deleteSpan = document.createElement("span");
   deleteSpan.innerText = "Delete";
-
   itemDelete.appendChild(deleteIcon);
   itemDelete.appendChild(deleteSpan);
 
-  // Append the two childs to menu
-  menu.appendChild(itemMaterial);
-  menu.appendChild(itemDelete);
-
-  wrapper.appendChild(menu);
-
-  document.body.appendChild(wrapper);
-
-  // const meshMenu = document.getElementsByClassName("wrapper")[0];
-
-  objectCompoenetContainer.addEventListener("contextmenu", (e) => {
-    e.preventDefault();
-    var rect = objectCompoenetContainer.getBoundingClientRect();
-    var x = e.offsetX;
-    var y = e.offsetY;
-    wrapper.style.left = `${x + rect.left}px`;
-    wrapper.style.top = `${y + rect.top}px`;
-    wrapper.style.animation = "0.5s ease";
-    wrapper.style.visibility = "visible";
-  });
-
-  $(".sidebar-elements").append(objectCompoenetContainer);
-
   itemDelete.addEventListener("click", () => {
-    console.log(objectCompoenetContainer.id);
-    mesh.dispose();
     $("#" + objectCompoenetContainer.id).remove();
     const meshArrayIndex = scene.meshes.indexOf(mesh);
     scene.meshes.splice(meshArrayIndex, 1);
 
+    // When the selected mesh is deleted -> turn visibility of the other meshes to 1
     if (getNumberOfPickedMeshes() == 0) {
       scene.meshes.forEach((mesh) => {
         mesh.visibility = 1;
       });
     }
+
+    // When we delete the last mesh
     if (scene.meshes == 0) {
       $(".empty-scene").show();
     }
   });
 
-  document.addEventListener("click", (e) => {
-    wrapper.style.visibility = "hidden";
+  // Append the two childs to menu
+  menu.appendChild(itemMaterial);
+  menu.appendChild(itemDelete);
+
+  objectContextMenu.appendChild(menu);
+  return objectContextMenu;
+}
+
+// ---> Create the Compoenent linked to the loaded mesh
+function createComponent(mesh, meshIcon) {
+  const objectCompoenetContainer = document.createElement("div");
+  objectCompoenetContainer.className = "objectInTheScene";
+  objectCompoenetContainer.id = mesh.id;
+
+  // Object Icon and Name
+  const objIcon = document.createElement("p");
+  objIcon.className = `objIcon ${meshIcon}`;
+  const objName = document.createElement("p");
+  objName.innerText = mesh.name;
+  objName.className = "objName";
+  objectCompoenetContainer.appendChild(objIcon);
+  objectCompoenetContainer.appendChild(objName);
+
+  // Toggle mesh Visivility
+  const hideShow = document.createElement("button");
+  hideShow.className = "hideShow show";
+  hideShow.title = "hide";
+  hideShow.addEventListener("click", (e) => {
+    e.stopPropagation(); // clicked div inside another clickable div
+    if (mesh.isEnabled()) {
+      e.target.className = "hideShow hide";
+      hideShow.title = "show";
+      mesh.setEnabled(false);
+    } else {
+      e.target.className = "hideShow show";
+      hideShow.title = "hide";
+      mesh.setEnabled(true);
+    }
+  });
+  objectCompoenetContainer.appendChild(hideShow);
+
+  // Select Mesh - Ctrl click on component for multiple select
+  objectCompoenetContainer.addEventListener("click", (event) => {
+    if (mesh.showBoundingBox) {
+      mesh.showBoundingBox = false;
+      if (event.ctrlKey == false) {
+        scene.meshes.forEach((mesh) => {
+          mesh.visibility = 1;
+        });
+      }
+    } else {
+      if (event.ctrlKey == false) {
+        scene.meshes.forEach((mesh) => {
+          mesh.showBoundingBox = false;
+          mesh.visibility = 0.5;
+        });
+      }
+      mesh.showBoundingBox = true;
+      mesh.visibility = 1;
+    }
+    scene.meshes.forEach((mesh) => {
+      // If no mesh is selected
+      if (mesh.showBoundingBox === false && getNumberOfPickedMeshes() == 0) {
+        mesh.visibility = 1;
+      }
+      // If at least one mesh is already selected
+      else if (
+        mesh.showBoundingBox === false &&
+        getNumberOfPickedMeshes() > 0
+      ) {
+        mesh.visibility = 0.5;
+      }
+    });
   });
 
-  scene.meshes.push(mesh);
+  // ---------------- Right Click Event - Context Menu ------------------
+  // Create Context Menu
+  const objectContextMenu = createObjectContextMenu(
+    mesh,
+    objectCompoenetContainer
+  );
+  document.body.appendChild(objectContextMenu);
+  document.addEventListener("click", (e) => {
+    objectContextMenu.style.visibility = "hidden";
+  });
+
+  // When Right click on Object
+  objectCompoenetContainer.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+    var rect = objectCompoenetContainer.getBoundingClientRect();
+    var x = e.offsetX;
+    var y = e.offsetY;
+    objectContextMenu.style.left = `${x + rect.left}px`;
+    objectContextMenu.style.top = `${y + rect.top}px`;
+    objectContextMenu.style.animation = "0.5s ease";
+    objectContextMenu.style.visibility = "visible";
+  });
+
+  $(".sidebar-elements").append(objectCompoenetContainer);
+}
+
+function getNumberOfPickedMeshes() {
+  var numberOfPickedMeshes = 0;
+  scene.meshes.forEach((mesh) => {
+    if (mesh.showBoundingBox) {
+      numberOfPickedMeshes += 1;
+    }
+  });
+  return numberOfPickedMeshes;
 }
