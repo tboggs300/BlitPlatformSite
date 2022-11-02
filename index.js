@@ -254,142 +254,6 @@ function loadMesh(fileName, url, extension, s) {
   );
 }
 
-function createObjectContextMenu(mesh, objectCompoenetContainer) {
-  const objectContextMenu = document.createElement("div");
-  objectContextMenu.className = "wrapper";
-
-  const menu = document.createElement("ul");
-  menu.className = "menu";
-
-  // ---------------- Material --------------
-  const itemMaterial = document.createElement("li");
-  itemMaterial.className = "item material";
-
-  // Span Div
-  const spanDiv = document.createElement("div");
-  const spanMaterial = document.createElement("span");
-  spanDiv.innerHTML = "Material";
-  spanDiv.appendChild(spanMaterial);
-
-  // Arrow Icon
-  const arrowIcon = document.createElement("i");
-  arrowIcon.className = "icon arrowIcon";
-
-  // Material Menu
-  const materialMenu = document.createElement("ul");
-  materialMenu.className = "material-menu";
-
-  // Default
-  const liDefault = document.createElement("li");
-  liDefault.className = "item kamalqraytou";
-  const spanDefault = document.createElement("span");
-  spanDefault.innerText = "Default";
-  const selectedMaterialIcon = document.createElement("i");
-  selectedMaterialIcon.className = "icon selectIcon";
-
-  liDefault.appendChild(spanDefault);
-  liDefault.appendChild(selectedMaterialIcon);
-
-  // Red
-  const liRed = document.createElement("li");
-  liRed.className = "item kamalqraytou";
-  const spanRed = document.createElement("span");
-  spanRed.innerText = "Red";
-  liRed.appendChild(spanRed);
-  //liRed.appendChild(selectedMaterialIcon);
-
-  // Green
-  const liGreen = document.createElement("li");
-  liGreen.className = "item kamalqraytou";
-  const spanGreen = document.createElement("span");
-  spanGreen.innerText = "Green";
-  liGreen.appendChild(spanGreen);
-  // liGreen.appendChild(selectedMaterialIcon);
-
-  // Blue
-  const liBlue = document.createElement("li");
-  liBlue.className = "item kamalqraytou";
-  const spanBlue = document.createElement("span");
-  spanBlue.innerText = "Blue";
-  liBlue.appendChild(spanBlue);
-  // liBlue.appendChild(selectedMaterialIcon);
-
-  // Select Material
-
-  liDefault.addEventListener("click", () => {
-    mesh.material = matDefault;
-    $(".selectIcon").remove();
-    const selectedMaterialIcon = document.createElement("i");
-    selectedMaterialIcon.className = "icon selectIcon";
-    liDefault.appendChild(selectedMaterialIcon);
-  });
-  liRed.addEventListener("click", () => {
-    mesh.material = matRed;
-    $(".selectIcon").remove();
-    const selectedMaterialIcon = document.createElement("i");
-    selectedMaterialIcon.className = "icon selectIcon";
-    liRed.appendChild(selectedMaterialIcon);
-  });
-  liGreen.addEventListener("click", () => {
-    mesh.material = matGreen;
-    $(".selectIcon").remove();
-    const selectedMaterialIcon = document.createElement("i");
-    selectedMaterialIcon.className = "icon selectIcon";
-    liGreen.appendChild(selectedMaterialIcon);
-  });
-  liBlue.addEventListener("click", () => {
-    mesh.material = matBlue;
-    $(".selectIcon").remove();
-    const selectedMaterialIcon = document.createElement("i");
-    selectedMaterialIcon.className = "icon selectIcon";
-    liBlue.appendChild(selectedMaterialIcon);
-  });
-
-  materialMenu.appendChild(liDefault);
-  materialMenu.appendChild(liRed);
-  materialMenu.appendChild(liGreen);
-  materialMenu.appendChild(liBlue);
-
-  itemMaterial.appendChild(spanDiv);
-  itemMaterial.appendChild(arrowIcon);
-  itemMaterial.appendChild(materialMenu);
-
-  // --------------- Delete ---------------
-  const itemDelete = document.createElement("li");
-  itemDelete.className = `item deleteItem ${mesh.id}`;
-  const deleteIcon = document.createElement("i");
-  deleteIcon.className = "icon deleteIcon";
-  const deleteSpan = document.createElement("span");
-  deleteSpan.innerText = "Delete";
-  itemDelete.appendChild(deleteIcon);
-  itemDelete.appendChild(deleteSpan);
-
-  itemDelete.addEventListener("click", () => {
-    $("#" + objectCompoenetContainer.id).remove();
-    const meshArrayIndex = scene.meshes.indexOf(mesh);
-    scene.meshes.splice(meshArrayIndex, 1);
-
-    // When the selected mesh is deleted -> turn visibility of the other meshes to 1
-    if (getNumberOfPickedMeshes() == 0) {
-      scene.meshes.forEach((mesh) => {
-        mesh.visibility = 1;
-      });
-    }
-
-    // When we delete the last mesh
-    if (scene.meshes == 0) {
-      $(".empty-scene").show();
-    }
-  });
-
-  // Append the two childs to menu
-  menu.appendChild(itemMaterial);
-  menu.appendChild(itemDelete);
-
-  objectContextMenu.appendChild(menu);
-  return objectContextMenu;
-}
-
 // ---> Create the Compoenent linked to the loaded mesh
 function createComponent(mesh, meshIcon) {
   const objectCompoenetContainer = document.createElement("div");
@@ -481,6 +345,157 @@ function createComponent(mesh, meshIcon) {
   });
 
   $(".sidebar-elements").append(objectCompoenetContainer);
+}
+
+function createObjectContextMenu(mesh, objectCompoenetContainer) {
+  const objectContextMenu = document.createElement("div");
+  objectContextMenu.className = "wrapper";
+
+  const menu = document.createElement("ul");
+  menu.className = "menu";
+
+  // ---------------- Material --------------
+  const itemMaterial = document.createElement("li");
+  itemMaterial.className = "item material";
+
+  // Span Div
+  const spanDiv = document.createElement("div");
+  const spanMaterial = document.createElement("span");
+  spanDiv.innerHTML = "Material";
+  spanDiv.appendChild(spanMaterial);
+
+  // Arrow Icon
+  const arrowIcon = document.createElement("i");
+  arrowIcon.className = "icon arrowIcon";
+
+  // Material Menu
+  const materialMenu = document.createElement("ul");
+  materialMenu.className = "material-menu";
+
+  // Default
+  const liDefault = document.createElement("li");
+  liDefault.className = "item kamalqraytou";
+  const spanDefault = document.createElement("span");
+  spanDefault.innerText = "Default";
+  const selectedMaterialIcon = document.createElement("i");
+  selectedMaterialIcon.className = "icon selectIcon";
+  selectedMaterialIcon.id = mesh.id;
+
+  liDefault.appendChild(spanDefault);
+  liDefault.appendChild(selectedMaterialIcon);
+
+  // Red
+  const liRed = document.createElement("li");
+  liRed.className = "item kamalqraytou";
+  const spanRed = document.createElement("span");
+  spanRed.innerText = "Red";
+  liRed.appendChild(spanRed);
+  //liRed.appendChild(selectedMaterialIcon);
+
+  // Green
+  const liGreen = document.createElement("li");
+  liGreen.className = "item kamalqraytou";
+  const spanGreen = document.createElement("span");
+  spanGreen.innerText = "Green";
+  liGreen.appendChild(spanGreen);
+  // liGreen.appendChild(selectedMaterialIcon);
+
+  // Blue
+  const liBlue = document.createElement("li");
+  liBlue.className = "item kamalqraytou";
+  const spanBlue = document.createElement("span");
+  spanBlue.innerText = "Blue";
+  liBlue.appendChild(spanBlue);
+  // liBlue.appendChild(selectedMaterialIcon);
+
+  // Select Material
+
+  liDefault.addEventListener("click", () => {
+    mesh.material = matDefault;
+
+    $("#" + mesh.id + ".icon.selectIcon").remove();
+
+    // Create Material Selected Icon
+    const selectedMaterialIcon = document.createElement("i");
+    selectedMaterialIcon.className = "icon selectIcon";
+    selectedMaterialIcon.id = mesh.id;
+
+    liDefault.appendChild(selectedMaterialIcon);
+  });
+  liRed.addEventListener("click", () => {
+    mesh.material = matRed;
+    $("#" + mesh.id + ".icon.selectIcon").remove();
+
+    const selectedMaterialIcon = document.createElement("i");
+    selectedMaterialIcon.className = "icon selectIcon";
+    selectedMaterialIcon.id = mesh.id;
+
+    liRed.appendChild(selectedMaterialIcon);
+  });
+  liGreen.addEventListener("click", () => {
+    mesh.material = matGreen;
+    $("#" + mesh.id + ".icon.selectIcon").remove();
+
+    const selectedMaterialIcon = document.createElement("i");
+    selectedMaterialIcon.className = "icon selectIcon";
+    selectedMaterialIcon.id = mesh.id;
+
+    liGreen.appendChild(selectedMaterialIcon);
+  });
+  liBlue.addEventListener("click", () => {
+    mesh.material = matBlue;
+    $("#" + mesh.id + ".icon.selectIcon").remove();
+
+    const selectedMaterialIcon = document.createElement("i");
+    selectedMaterialIcon.className = "icon selectIcon";
+    selectedMaterialIcon.id = mesh.id;
+
+    liBlue.appendChild(selectedMaterialIcon);
+  });
+
+  materialMenu.appendChild(liDefault);
+  materialMenu.appendChild(liRed);
+  materialMenu.appendChild(liGreen);
+  materialMenu.appendChild(liBlue);
+
+  itemMaterial.appendChild(spanDiv);
+  itemMaterial.appendChild(arrowIcon);
+  itemMaterial.appendChild(materialMenu);
+
+  // --------------- Delete ---------------
+  const itemDelete = document.createElement("li");
+  itemDelete.className = `item deleteItem ${mesh.id}`;
+  const deleteIcon = document.createElement("i");
+  deleteIcon.className = "icon deleteIcon";
+  const deleteSpan = document.createElement("span");
+  deleteSpan.innerText = "Delete";
+  itemDelete.appendChild(deleteIcon);
+  itemDelete.appendChild(deleteSpan);
+
+  itemDelete.addEventListener("click", () => {
+    $("#" + objectCompoenetContainer.id).remove();
+    const meshArrayIndex = scene.meshes.indexOf(mesh);
+    scene.meshes.splice(meshArrayIndex, 1);
+
+    // When the selected mesh is deleted -> turn visibility of the other meshes to 1
+    if (getNumberOfPickedMeshes() == 0) {
+      scene.meshes.forEach((mesh) => {
+        mesh.visibility = 1;
+      });
+    }
+
+    // When we delete the last mesh
+    if (scene.meshes == 0) {
+      $(".empty-scene").show();
+    }
+  });
+
+  // Append the two childs to menu
+  menu.appendChild(itemMaterial);
+  menu.appendChild(itemDelete);
+
+  objectContextMenu.appendChild(menu);
+  return objectContextMenu;
 }
 
 function getNumberOfPickedMeshes() {
