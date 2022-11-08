@@ -11,46 +11,28 @@ body {
   width: 100%;
 }
 
-.grid {
+.main {
   height: 100%;
   display: grid;
   grid-template-areas:
-    "brand header"
-    "scene-explorer actions"
-    "scene-explorer scene-container";
-  grid-template-columns: 20% 80%;
-  grid-template-rows: 8% 12% 80%;
+    "app-header"
+    "app-content";
+  grid-template-rows: 10% 90%;
 }
 
-/* Scene */
-.scene-container {
-  background: #e5e5e5;
-  grid-area: scene-container;
-}
-canvas {
-  z-index: 0;
-  position: relative;
-  width: 100%;
+/* Header */
+.app-header {
+  background: #7744f8;
   height: 100%;
-  background: radial-gradient(
-    circle,
-    #282c349c 0%,
-    #282c34ca 35%,
-    #282c34 100%
-  );
+  grid-area: app-header;
+  display: grid;
+  grid-template-areas: "brand navbar";
+  grid-template-columns: 20% 80%;
 }
 
-/* Modeling - Mesh .. */
-header {
+.app-header .brand {
   background: cadetblue;
-  color: white;
-  grid-area: header;
-}
-
-/* Brand - Blit Platform */
-.brand {
-  background: cadetblue;
-  grid-area: "brand";
+  grid-area: brand;
   display: flex;
   font-family: "Roboto", sans-serif;
   justify-content: flex-start;
@@ -58,278 +40,22 @@ header {
   align-items: center;
 }
 
-/* Actions */
-
-.actions {
-  background: #cccccc41;
-  grid-area: actions;
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
-.header-actions {
-  width: 100%;
-  display: grid;
-  grid-template-areas: "create transform operate";
-  grid-template-columns: 50% 25% 25%;
-  font-family: "Poppins", sans-serif;
-  background: #eaeaea5f;
-}
-
-.create {
-  grid-area: create;
-  display: flex;
-  justify-content: space-around;
-}
-
-.transform {
-  grid-area: transform;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.operate {
-  grid-area: operate;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.styled-button {
-  width: 4rem;
-  font-size: medium;
-  padding: 6px 10px;
-  margin-left: 5px;
-  margin-right: 5px;
-  transition: 300ms;
-  background-color: #885af8;
-  color: white;
-  border-color: rgb(255, 255, 255);
-  box-shadow: #885af8 0px 0px 5px 0px;
-  border-radius: 4px;
+.app-header .navbar {
+  background: cadetblue;
+  grid-area: navbar;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-}
-
-.styled-button:hover {
-  cursor: pointer;
-  background-color: #7744f8;
   color: white;
-  border-color: white;
 }
 
-.upload-button {
-  width: 8rem;
-  font-size: medium;
-  padding: 6px 10px;
-  transition: 300ms;
-  background-color: #885af8;
-  color: white;
-  border-color: rgb(255, 255, 255);
-  box-shadow: #885af8 0px 0px 8px 0px;
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.upload-button:hover {
+.app-header .navbar a:hover {
   cursor: pointer;
-  background-color: #875af8ec;
-  color: white;
-  border-color: white;
+  font-weight: 800;
 }
 
-.uploadIcon {
-  background-image: url("./assets/uploadIcon.png");
-  height: 20px;
-  width: 20px;
-}
-
-/* Scene Explorer */
-.scene-explorer {
-  background: white;
-  grid-area: scene-explorer;
-}
-
-.sidebar-elements {
-  background: #cccccc41;
-  display: grid;
-  grid-gap: 0.7rem;
-  border-radius: 10px;
-  margin: 0rem 0.7rem;
-  padding: 0.5rem;
-  min-height: 1.5rem;
-  max-height: 24.5rem;
-  overflow-y: auto;
-}
-
-.sidebar-elements p {
-  margin: 0;
-  font-size: 14px;
-}
-
-.objectInTheScene {
-  display: grid;
-  grid-template-areas: "objIcon objName hideShow";
-  grid-template-columns: 15% 70% 15%;
-  border-radius: 0.5rem;
-  padding: 7px;
-}
-
-.objectInTheScene:hover {
-  /* background: #dfdfdf; */
-  cursor: pointer;
-}
-
-.objectUnselected {
-  background: #cccccc41;
-}
-
-.objectSelected {
-  background: #e54040bd;
-}
-
-.objIcon {
-  grid-area: objIcon;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-.cubeIcon {
-  background-image: url("./assets/cube.png");
-}
-.cylinderIcon {
-  background-image: url("./assets/cylinder.png");
-}
-.sphereIcon {
-  background-image: url("./assets/sphere.png");
-}
-.meshIcon {
-  background-image: url("./assets/mesh.png");
-}
-
-.objName {
-  grid-area: objName;
-  padding-left: 5px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.hideShow {
-  grid-area: hideShow;
+/* Content */
+.app-content {
+  grid-area: app-content;
   height: 100%;
-  width: 100%;
-  background: transparent;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  border-width: 0px;
-}
-.hideShow:hover {
-  border-radius: 5px;
-  background-color: #cacacc;
-  cursor: pointer;
-}
-
-.show {
-  background-image: url("./assets/show.png");
-  padding: 0px;
-}
-
-.hide {
-  background-image: url("./assets/hide.png");
-  padding: 0px;
-}
-
-/* --- Context Menu : Right Click on Object in left Panel --- */
-.wrapper {
-  position: absolute;
-  visibility: hidden;
-  align-self: center;
-  background: white;
-  width: 200px;
-  border-radius: 7px;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
-  font-family: "Poppins", sans-serif;
-  font-size: 14px;
-}
-
-.wrapper .menu {
-  padding: 7px 10px;
-}
-
-.menu .item {
-  list-style: none;
-  background-color: white;
-  margin-bottom: 3px;
-  border-radius: 4px;
-  padding: 6px;
-}
-.menu .item:hover {
-  background-color: #eaeaea;
-  cursor: pointer;
-  transition: 0.1s ease;
-}
-
-.kamalqraytou {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.menu .deleteItem:hover {
-  background-color: #d32929;
-  color: white;
-  cursor: pointer;
-  transition: 0.1s ease;
-}
-
-.icon {
-  width: 10px;
-  height: 10px;
-  margin-right: 5px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-.arrowIcon {
-  background-image: url("./assets/right-arrow.png");
-}
-
-.menu .material {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.material .material-menu {
-  position: absolute;
-  background-color: white;
-  width: 150px;
-  top: 4px;
-  left: 190px;
-  padding: 7px 10px;
-  border-radius: 7px;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.1s ease;
-}
-
-.material:hover .material-menu {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.selectMaterial {
-  grid-area: selectMaterial;
-}
-
-.selectIcon {
-  background-image: url("./assets/select.png");
 }

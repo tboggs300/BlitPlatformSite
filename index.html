@@ -4,8 +4,33 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Blit Platform</title>
     <link rel="stylesheet" type="text/css" href="index.css" />
+
+    <link rel="stylesheet" type="text/css" href="./src/Modeling/modeling.css" />
+    <link rel="stylesheet" type="text/css" href="./src/Mesh/mesh.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./src/Simulation/simulation.css"
+    />
+    <link rel="stylesheet" type="text/css" href="./src/Result/result.css" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./src/Modeling/ActionsBar/ActionsBar.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./src/Modeling/ObjectComponent/ContextMenu.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./src//Modeling/ObjectComponent/ObjectComponent.css"
+    />
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
     <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
@@ -13,97 +38,133 @@
     <script src="https://cdn.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
     <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/vtk.js@25.12.0/vtk.js"></script>
   </head>
   <body>
-    <div class="grid">
-      <!-- Brand -->
-      <div class="brand">
-        <h3 style="color: white; padding-left: 1px">
-          <strong>Blit </strong>Platform
-        </h3>
+    <!-- Modeling -->
+
+    <!-- Brand -->
+    <div class="main">
+      <div class="app-header">
+        <div class="brand">
+          <h3 style="color: white; padding-left: 1px">
+            <strong>Blit </strong>Platform
+          </h3>
+        </div>
+
+        <div
+          class="navbar"
+          style="display: flex; justify-content: space-around"
+        >
+          <!-- <a class="anchor-style" id="Dashboard-anchor">Dashbord</a> -->
+          <a class="anchor-style" id="Modeling-anchor">Modeling</a>
+          <a class="anchor-style" id="Mesh-anchor">Mesh</a>
+          <a class="anchor-style" id="Simulation-anchor">Simulation</a>
+          <a class="anchor-style" id="Result-anchor">Result</a>
+        </div>
       </div>
 
-      <!-- Modeling - Mesh .. Bar - Conditional Rendering -->
-      <header style="display: flex; justify-content: space-around">
-        <p>Dashbord</p>
-        <p>Modeling</p>
-        <p>Mesh</p>
-        <p>Simulation</p>
-        <p>Result</p>
-      </header>
+      <div class="app-content">
+        <!-- Modeling -->
+        <div class="app-modeling-section" id="modeling">
+          <div class="grid">
+            <!-- Scene Explorer -->
+            <aside class="scene-explorer">
+              <h3 style="padding-left: 1rem">Objects</h3>
+              <div class="sidebar-elements"></div>
+            </aside>
 
-      <!-- Scene Explorer -->
-      <aside class="scene-explorer">
-        <h3 style="padding-left: 1rem">Objects</h3>
-        <div class="sidebar-elements">
-          <p class="empty-scene">Empty Scene</p>
-        </div>
-      </aside>
+            <!-- Create - Transform - Operate -->
+            <div class="actions">
+              <div class="header-actions">
+                <div class="create">
+                  <!-- Import CAD -->
+                  <div style="display: grid; justify-items: center">
+                    <div class="upload-button">
+                      <i class="icon uploadIcon"></i>
+                      <p style="font-size: 14px; margin: 0px">Upload Mesh</p>
+                    </div>
+                    <p
+                      style="
+                        font-size: 12px;
+                        margin: 2px;
+                        padding-top: 4px;
+                        color: #90a0b7;
+                      "
+                    >
+                      Import CAD
+                    </p>
+                  </div>
 
-      <!-- Create - Transform - Operate -->
-      <div class="actions">
-        <div class="header-actions">
-          <div class="create">
-            <!-- Import CAD -->
-            <div style="display: grid; justify-items: center">
-              <div class="upload-button">
-                <i class="icon uploadIcon"></i>
-                <p style="font-size: 14px; margin: 0px">Upload Mesh</p>
+                  <!-- Create SPHERE - CUBE - CYLINDER -->
+                  <div style="display: grid; justify-items: center">
+                    <div style="display: flex; justify-content: space-between">
+                      <div id="sphere-button" class="styled-button">
+                        <p style="font-size: 14px; margin: 0px">Sphere</p>
+                      </div>
+                      <div id="cube-button" class="styled-button">
+                        <p style="font-size: 14px; margin: 0px">Cube</p>
+                      </div>
+                      <div id="cylinder-button" class="styled-button">
+                        <p style="font-size: 14px; margin: 0px">Cylinder</p>
+                      </div>
+                    </div>
+                    <p
+                      style="
+                        font-size: 12px;
+                        margin: 2px;
+                        padding-top: 4px;
+                        color: #90a0b7;
+                      "
+                    >
+                      Create Shape
+                    </p>
+                  </div>
+                </div>
+
+                <div style="color: #90a0b7" class="transform">transform</div>
+
+                <div style="color: #90a0b7" class="operate">operate</div>
               </div>
-              <p
-                style="
-                  font-size: 12px;
-                  margin: 2px;
-                  padding-top: 4px;
-                  color: #90a0b7;
-                "
-              >
-                Import CAD
-              </p>
             </div>
 
-            <!-- Create SPHERE - CUBE - CYLINDER -->
-            <div style="display: grid; justify-items: center">
-              <div style="display: flex; justify-content: space-between">
-                <div id="sphere-button" class="styled-button">
-                  <!-- <i class="icon sphereIcon"></i> -->
-                  <p style="font-size: 14px; margin: 0px">Sphere</p>
-                </div>
-                <div id="cube-button" class="styled-button">
-                  <!-- <i class="icon cubeIcon"></i> -->
-                  <p style="font-size: 14px; margin: 0px">Cube</p>
-                </div>
-                <div id="cylinder-button" class="styled-button">
-                  <!-- <i class="icon cylinderIcon"></i> -->
-                  <p style="font-size: 14px; margin: 0px">Cylinder</p>
-                </div>
-              </div>
-              <p
-                style="
-                  font-size: 12px;
-                  margin: 2px;
-                  padding-top: 4px;
-                  color: #90a0b7;
-                "
-              >
-                Create Shape
-              </p>
-            </div>
+            <!-- Scene -->
+            <main class="scene-container">
+              <canvas></canvas>
+            </main>
           </div>
-
-          <div style="color: #90a0b7" class="transform">transform</div>
-
-          <div style="color: #90a0b7" class="operate">operate</div>
         </div>
+
+        <!-- Mesh -->
+        <div class="app-mesh-section" id="mesh">
+          <canvas class="mesh-canvas"></canvas>
+        </div>
+
+        <!-- Simulation -->
+        <div class="app-simulation-section" id="simulation"></div>
+
+        <!-- Result -->
+        <div class="app-result-section" id="result"></div>
       </div>
-
-      <!-- Scene -->
-      <main class="scene-container">
-        <canvas></canvas>
-      </main>
     </div>
-  </body>
-  <script src="./index.js"></script>
-</html>
 
-<!-- <input type="checkbox" class="debug-switcher" value="disable">Debug Mode</input> -->
+    <!-- Simulation -->
+
+    <!-- hey -->
+    <input
+      type="range"
+      min="3"
+      max="50"
+      value="6"
+      class="slider"
+      style="z-index: 100; position: absolute"
+    />
+  </body>
+  <script type="text/javascript">
+    var actions = []; // Redo - Ctrl Z
+    let sphereButtonClicks = 0; // for position and naming purpose
+    let cubeButtonClicks = 0;
+    let cylinderButtonClicks = 0;
+  </script>
+  <script type="module" src="./index.js"></script>
+</html>
