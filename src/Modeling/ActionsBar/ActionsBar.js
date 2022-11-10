@@ -5,7 +5,7 @@ import createComponent from "../ObjectComponent/ObjectComponent.js";
 // var ListOfMeshes = {};
 
 // Upload STL File ------------------------------------//
-function loadMesh(fileName, url, extension, s) {
+export function loadMesh(fileName, url, extension, s) {
   BABYLON.Scene;
   BABYLON.SceneLoader.ImportMesh(
     "",
@@ -14,21 +14,31 @@ function loadMesh(fileName, url, extension, s) {
     scene,
     function (newMeshes) {
       const mesh = newMeshes[0];
-      newMeshes[0].name = fileName;
-      newMeshes[0].id = fileName;
-      newMeshes[0].scaling = new BABYLON.Vector3(s, s, s);
-      newMeshes[0].rotation = new BABYLON.Vector3(0, 0, 0);
-      newMeshes[0].position = new BABYLON.Vector3(0, 0, 0);
-      newMeshes[0].material = new BABYLON.NormalMaterial("currentMesh", scene);
-      frameCamera(1.5, newMeshes[0]);
-
+      mesh.name = fileName;
+      mesh.id = fileName;
+      mesh.scaling = new BABYLON.Vector3(s, s, s);
+      mesh.rotation = new BABYLON.Vector3(0, 0, 0);
+      mesh.position = new BABYLON.Vector3(0, 0, 0);
+      mesh.material = new BABYLON.NormalMaterial("stlMaterial", scene);
       $(".empty-scene").remove();
+
       mesh.material = new BABYLON.NormalMaterial(fileName, scene);
       if (getNumberOfPickedMeshes() > 0) {
         mesh.visibility = 0.5;
       }
       const objectCompoenetContainer = createComponent(mesh, "meshIcon", scene);
       $(".sidebar-elements").append(objectCompoenetContainer);
+      frameCamera(1.5, mesh);
+
+      actions.push({
+        mesh: [url, mesh],
+        meshId: fileName,
+        action: "add",
+        objectCompoenetContainer: objectCompoenetContainer,
+        type: "mesh",
+      });
+
+      console.log(actions);
     },
     null,
     null,
@@ -36,17 +46,14 @@ function loadMesh(fileName, url, extension, s) {
   );
 }
 export function importSTLFile() {
-  // scene.dispose();
   let input = document.createElement("input");
   input.type = "file";
   input.accept = ".stl";
   input.multiple = true;
 
   input.onchange = (_) => {
-    // you can use this method to get file and perform respective operations
     let file = input.files[0];
     let fileName = file.name.split(".")[0];
-    console.log(fileName);
 
     // let numberUploadedFiles = input.files.length;
 
@@ -60,14 +67,16 @@ export function importSTLFile() {
     }
 
     const url = URL.createObjectURL(file);
-    loadStatus = loadMesh(fileName, url, ext, 1);
+    loadMesh(fileName, url, ext, 1);
   };
   input.click();
 }
 
 // Create Shapes : Sphere, Cube, Cylinder --------------//
 export function createShape(meshType, buttonsClicks) {
-  let mesh = 0;
+  // console.log("meshType : ", meshType, "Type : ", typeof meshType);
+  // console.log("meshType : ", buttonsClicks, "Type : ", typeof buttonsClicks);
+  let mesh;
   let objectCompoenetContainer;
   switch (meshType) {
     case "sphere":
@@ -76,6 +85,7 @@ export function createShape(meshType, buttonsClicks) {
         {},
         scene
       );
+
       sphereButtonClicks += 1;
       objectCompoenetContainer = createComponent(mesh, "sphereIcon", scene);
 
@@ -95,15 +105,20 @@ export function createShape(meshType, buttonsClicks) {
       cylinderButtonClicks += 1;
       objectCompoenetContainer = createComponent(mesh, "cylinderIcon", scene);
       break;
+    default:
+      console.log("default");
   }
   $(".sidebar-elements").append(objectCompoenetContainer);
 
   actions.push({
     mesh: mesh,
+    meshId: buttonsClicks,
     action: "add",
     objectCompoenetContainer: objectCompoenetContainer,
     type: meshType,
   });
+
+  console.log(actions);
 
   mesh.material = new BABYLON.NormalMaterial(meshType, scene);
   mesh.position.x = 2 - buttonsClicks;

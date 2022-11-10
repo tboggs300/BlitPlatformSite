@@ -1,3 +1,5 @@
+import { scene } from "../../../index.js";
+
 const canvas = document.querySelectorAll("canvas")[0];
 
 const engine = new BABYLON.Engine(canvas, true, {});

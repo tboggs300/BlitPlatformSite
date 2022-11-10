@@ -134,16 +134,24 @@ const createObjectContextMenu = (mesh, objectCompoenetContainer, scene) => {
 
   itemDelete.addEventListener("click", () => {
     $("#" + objectCompoenetContainer.id).remove();
+    mesh.dispose();
+
+    let meshName = mesh.name;
+    let numberPattern = /\d+/;
+    let wordPattern = /[^0-9]+/;
+    let meshId = numberPattern.exec(meshName)[0];
+    meshId = parseInt(meshId); // get mesh id from mesh name
+    let meshType = wordPattern.exec(meshName)[0];
+
     actions.push({
       mesh: mesh,
+      meshId: meshId,
       action: "delete",
       objectCompoenetContainer: objectCompoenetContainer,
-      type: mesh.name,
+      type: meshType,
     });
-    // mesh.setEnabled(false);
-    mesh.dispose(false);
-    // const meshInstance = mesh.createInstance(mesh.name);
-    // scene.removeMesh(mesh);
+
+    console.log(actions);
 
     // When the selected mesh is deleted -> turn visibility of the other meshes to 1
     if (getNumberOfPickedMeshes() == 0) {
