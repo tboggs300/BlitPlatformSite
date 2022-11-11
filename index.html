@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/ico.png" />
     <title>Blit Platform</title>
     <link rel="stylesheet" type="text/css" href="index.css" />
 
@@ -31,6 +32,11 @@
       type="text/css"
       href="./src//Modeling/ObjectComponent/ObjectComponent.css"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./src/Modeling/ActionsBar/ModalCostumizedShape.css"
+    />
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
     <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
@@ -39,6 +45,12 @@
     <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://unpkg.com/vtk.js@25.12.0/vtk.js"></script>
+    <!-- JQuery UI -->
+    <script
+      src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"
+      integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY="
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <!-- Modeling -->
@@ -159,6 +171,77 @@
       class="slider"
       style="z-index: 100; position: absolute"
     />
+
+    <!-- Actions Overlay Modal - Costumized shapes -->
+    <div class="modal">
+      <div class="modal__inner">
+        <div class="modal__header">
+          <h5 style="padding: 0px; margin: 0px; align-self: center">Cube</h5>
+          <!-- <button class="modal__close">&#x2716;</button> -->
+        </div>
+
+        <div class="modal__content">
+          <div class="modal-inputs">
+            <!-- Name -->
+            <div class="input-element">
+              <p style="padding: 0px; margin: 0px">Name:</p>
+              <input type="text" value="cube" id="name-input" />
+            </div>
+
+            <!-- X -->
+            <div class="two-inputs-wrapper">
+              <div class="input-element">
+                <p style="padding: 0px; margin: 0px">Xmin:</p>
+                <input type="text" value="0" id="x-min-input" />
+              </div>
+              <div class="input-element">
+                <p style="padding: 0px; margin: 0px">Xmax:</p>
+                <input type="text" value="1" id="x-max-input" />
+              </div>
+            </div>
+            <!-- Y -->
+            <div class="two-inputs-wrapper">
+              <div class="input-element">
+                <p style="padding: 0px; margin: 0px">Ymin:</p>
+                <input type="text" value="0" id="y-min-input" />
+              </div>
+              <div class="input-element">
+                <p style="padding: 0px; margin: 0px">Ymax:</p>
+                <input type="text" value="1" id="y-max-input" />
+              </div>
+            </div>
+            <!-- Z -->
+            <div class="two-inputs-wrapper">
+              <div class="input-element">
+                <p style="padding: 0px; margin: 0px">Zmin:</p>
+                <input type="text" value="0" id="z-min-input" />
+              </div>
+              <div class="input-element">
+                <p style="padding: 0px; margin: 0px">Zmax:</p>
+                <input type="text" value="1" id="z-max-input" />
+              </div>
+            </div>
+
+            <!-- Material -->
+            <div class="input-element">
+              <p style="padding: 0px; margin: 0px">Material:</p>
+              <select name="material" id="material-input" form="materialForm">
+                <option value="Default">Default</option>
+                <option value="Red">Red</option>
+                <option value="Green">Green</option>
+                <option value="Blue">Blue</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button type="submit" class="modal-ok-button">OK</button>
+            <!-- <button>Preview</button> -->
+            <button class="modal-cancel-button">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <!-- /modal__content -->
+    </div>
   </body>
   <script type="text/javascript">
     var actions = []; // Redo - Ctrl Z

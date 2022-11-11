@@ -51,3 +51,10 @@ $(document).ready(function () {
     $("#result").show();
   });
 });
+
+// How to add more modals - re-using the code
+// On key press 'esc', close the modal
+// Add in Accessability
+//Recactoring? toggle the class names? instead of add and remove, and then somehow for the modal overlay?
+
+// More advanced make this in prototyping/oop JS

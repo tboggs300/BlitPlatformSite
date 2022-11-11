@@ -1,6 +1,9 @@
 import { scene } from "../../../index.js";
 import { frameCamera } from "../Scene/BabylonScene.js";
 import createComponent from "../ObjectComponent/ObjectComponent.js";
+import "./ModalCostumizedShape.js";
+import { openModal } from "./ModalCostumizedShape.js";
+import { chooseMaterial } from "../ObjectComponent/ContextMenu.js";
 
 // var ListOfMeshes = {};
 
@@ -73,9 +76,7 @@ export function importSTLFile() {
 }
 
 // Create Shapes : Sphere, Cube, Cylinder --------------//
-export function createShape(meshType, buttonsClicks) {
-  // console.log("meshType : ", meshType, "Type : ", typeof meshType);
-  // console.log("meshType : ", buttonsClicks, "Type : ", typeof buttonsClicks);
+export function createShape(meshType, buttonsClicks, cubeObj) {
   let mesh;
   let objectCompoenetContainer;
   switch (meshType) {
@@ -86,12 +87,25 @@ export function createShape(meshType, buttonsClicks) {
         scene
       );
 
+      mesh.material = new BABYLON.NormalMaterial(meshType, scene);
+
       sphereButtonClicks += 1;
       objectCompoenetContainer = createComponent(mesh, "sphereIcon", scene);
 
       break;
     case "cube":
-      mesh = BABYLON.MeshBuilder.CreateBox(meshType + buttonsClicks, {}, scene);
+      mesh = BABYLON.MeshBuilder.CreateBox(cubeObj.name, {}, scene);
+      mesh.position.x = cubeObj.xmin;
+      mesh.position.y = cubeObj.ymin;
+      mesh.position.z = cubeObj.zmin;
+      mesh.scaling.x = cubeObj.xmax - cubeObj.xmin;
+      mesh.scaling.y = cubeObj.ymax - cubeObj.ymin;
+      mesh.scaling.z = cubeObj.zmax - cubeObj.zmin;
+      mesh.material = chooseMaterial(cubeObj.material, scene);
+      console.log(mesh);
+
+      frameCamera(1.5, mesh);
+
       cubeButtonClicks += 1;
       objectCompoenetContainer = createComponent(mesh, "cubeIcon", scene);
       break;
@@ -103,6 +117,7 @@ export function createShape(meshType, buttonsClicks) {
         scene
       );
       cylinderButtonClicks += 1;
+      mesh.material = new BABYLON.NormalMaterial(meshType, scene);
       objectCompoenetContainer = createComponent(mesh, "cylinderIcon", scene);
       break;
     default:
@@ -120,8 +135,6 @@ export function createShape(meshType, buttonsClicks) {
 
   console.log(actions);
 
-  mesh.material = new BABYLON.NormalMaterial(meshType, scene);
-  mesh.position.x = 2 - buttonsClicks;
   buttonsClicks = buttonsClicks + 1;
   if (getNumberOfPickedMeshes() > 0) {
     mesh.visibility = 0.5;
@@ -129,21 +142,44 @@ export function createShape(meshType, buttonsClicks) {
   return mesh;
 }
 
+// function showSpehreModal() {
+//   alert("sphere modal");
+// }
+
+const addCube = (e) => {
+  openModal(e).then(
+    (resolve) => {
+      $(".empty-scene").remove();
+      let cubeObj = resolve;
+      createShape("cube", cubeButtonClicks, cubeObj);
+    },
+    (reject) => {
+      console.log(reject);
+    }
+  );
+};
+
+var addSphereBtn = document.querySelector("#sphere-button");
+// addSphereBtn.addEventListener("click", addSphere);
+
+var addCubeBtn = document.querySelector("#cube-button");
+addCubeBtn.addEventListener("click", addCube);
+
 $(document).ready(function () {
-  $("#sphere-button").click(function () {
-    $(".empty-scene").remove();
-    createShape("sphere", sphereButtonClicks);
-  });
+  // $("#sphere-button").click(function () {
+  //   // showSpehreModal();
+  //   createShape("sphere", sphereButtonClicks);
+  // });
 
-  $("#cube-button").click(function () {
-    $(".empty-scene").remove();
-    createShape("cube", cubeButtonClicks);
-  });
+  // $("#cube-button").click(function () {
+  //   $(".empty-scene").remove();
+  //   createShape("cube", cubeButtonClicks);
+  // });
 
-  $("#cylinder-button").click(function () {
-    $(".empty-scene").remove();
-    createShape("cylinder", cylinderButtonClicks);
-  });
+  // $("#cylinder-button").click(function () {
+  //   $(".empty-scene").remove();
+  //   createShape("cylinder", cylinderButtonClicks);
+  // });
 
   $(".upload-button").click(function () {
     importSTLFile();

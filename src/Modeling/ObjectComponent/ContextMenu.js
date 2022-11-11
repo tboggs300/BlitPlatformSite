@@ -1,5 +1,30 @@
 import { getNumberOfPickedMeshes } from "../ActionsBar/ActionsBar.js";
 
+export const chooseMaterial = (materialStr, scene) => {
+  var material;
+  switch (materialStr) {
+    case "Default":
+      material = new BABYLON.NormalMaterial("Default", scene);
+      break;
+
+    case "Red":
+      material = new BABYLON.StandardMaterial("Red", scene);
+      material.diffuseColor = new BABYLON.Color3(1, 0, 0);
+      break;
+
+    case "Green":
+      material = new BABYLON.StandardMaterial("Green", scene);
+      material.diffuseColor = new BABYLON.Color3(0, 1, 0);
+      break;
+
+    case "Blue":
+      material = new BABYLON.StandardMaterial("Blue", scene);
+      material.diffuseColor = new BABYLON.Color3(0, 0, 1);
+      break;
+  }
+  return material;
+};
+
 const createObjectContextMenu = (mesh, objectCompoenetContainer, scene) => {
   const objectContextMenu = document.createElement("div");
   objectContextMenu.className = "wrapper";
@@ -30,12 +55,7 @@ const createObjectContextMenu = (mesh, objectCompoenetContainer, scene) => {
   liDefault.className = "item kamalqraytou";
   const spanDefault = document.createElement("span");
   spanDefault.innerText = "Default";
-  const selectedMaterialIcon = document.createElement("i");
-  selectedMaterialIcon.className = "icon selectIcon";
-  selectedMaterialIcon.id = mesh.id;
-
   liDefault.appendChild(spanDefault);
-  liDefault.appendChild(selectedMaterialIcon);
 
   // Red
   const liRed = document.createElement("li");
@@ -57,6 +77,25 @@ const createObjectContextMenu = (mesh, objectCompoenetContainer, scene) => {
   const spanBlue = document.createElement("span");
   spanBlue.innerText = "Blue";
   liBlue.appendChild(spanBlue);
+
+  const selectedMaterialIcon = document.createElement("i");
+  selectedMaterialIcon.className = "icon selectIcon";
+  selectedMaterialIcon.id = mesh.id;
+
+  switch (mesh.material.id) {
+    case "Default":
+      liDefault.appendChild(selectedMaterialIcon);
+      break;
+    case "Red":
+      liRed.appendChild(selectedMaterialIcon);
+      break;
+    case "Green":
+      liGreen.appendChild(selectedMaterialIcon);
+      break;
+    case "Blue":
+      liBlue.appendChild(selectedMaterialIcon);
+      break;
+  }
 
   // Create Differents Materials
   var matDefault = new BABYLON.NormalMaterial("defaultMaterial", scene);
