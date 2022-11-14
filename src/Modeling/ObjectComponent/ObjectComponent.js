@@ -1,5 +1,7 @@
 import createObjectContextMenu from "./ContextMenu.js";
-import { getNumberOfPickedMeshes } from "../ActionsBar/ActionsBar.js";
+import { getNumberOfPickedMeshes } from "../ActionsBar/Create/CreateActions.js";
+
+import { gizmo } from "../ActionsBar/Transform/TransformActions.js";
 // import { scene } from "../../index.js";
 
 export default function createComponent(mesh, meshIcon, scene) {
@@ -49,6 +51,7 @@ export default function createComponent(mesh, meshIcon, scene) {
     if (mesh.showBoundingBox) {
       // Bounding Box and visibility
       mesh.showBoundingBox = false;
+      if (gizmo) gizmo.attachedMesh = null;
       if (event.ctrlKey == false) {
         scene.meshes.forEach((mesh) => {
           mesh.visibility = 1;

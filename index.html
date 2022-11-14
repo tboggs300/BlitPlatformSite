@@ -20,7 +20,12 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="./src/Modeling/ActionsBar/ActionsBar.css"
+      href="./src/Modeling/ActionsBar/Create/CreateActions.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./src/Modeling/ActionsBar/Transform/TransformActions.css"
     />
     <link
       rel="stylesheet"
@@ -35,7 +40,7 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="./src/Modeling/ActionsBar/Modals/ModalCostumizedCube.css"
+      href="./src/Modeling/ActionsBar/Create/Modals/ModalCostumizedShape.css"
     />
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
@@ -112,6 +117,7 @@
                   <div style="display: grid; justify-items: center">
                     <div style="display: flex; justify-content: space-between">
                       <div id="sphere-button" class="styled-button">
+                        <!-- <p style="font-size: 14px; margin: 0px">Sphere</p> -->
                         <p style="font-size: 14px; margin: 0px">Sphere</p>
                       </div>
                       <div id="cube-button" class="styled-button">
@@ -134,7 +140,32 @@
                   </div>
                 </div>
 
-                <div style="color: #90a0b7" class="transform">transform</div>
+                <div style="color: #90a0b7" class="transform">
+                  <div style="display: grid; justify-items: center">
+                    <div style="display: flex; justify-content: space-between">
+                      <div id="translate-button" class="styled-button">
+                        <!-- <p style="font-size: 14px; margin: 0px">Sphere</p> -->
+                        <p style="font-size: 14px; margin: 0px">Translate</p>
+                      </div>
+                      <div id="rotate-button" class="styled-button">
+                        <p style="font-size: 14px; margin: 0px">Rotate</p>
+                      </div>
+                      <div id="scale-button" class="styled-button">
+                        <p style="font-size: 14px; margin: 0px">Scale</p>
+                      </div>
+                    </div>
+                    <p
+                      style="
+                        font-size: 12px;
+                        margin: 2px;
+                        padding-top: 4px;
+                        color: #90a0b7;
+                      "
+                    >
+                      Transform Shape
+                    </p>
+                  </div>
+                </div>
 
                 <div style="color: #90a0b7" class="operate">operate</div>
               </div>
@@ -153,24 +184,23 @@
         </div>
 
         <!-- Simulation -->
-        <div class="app-simulation-section" id="simulation"></div>
+        <div class="app-simulation-section" id="simulation">
+          <input
+            type="range"
+            min="3"
+            max="50"
+            value="6"
+            class="slider"
+            style="z-index: 100; position: absolute"
+          />
+        </div>
 
         <!-- Result -->
         <div class="app-result-section" id="result"></div>
       </div>
     </div>
 
-    <!-- Simulation -->
-
-    <!-- hey -->
-    <input
-      type="range"
-      min="3"
-      max="50"
-      value="6"
-      class="slider"
-      style="z-index: 100; position: absolute"
-    />
+    <!-- vtk Scene -->
 
     <!-- Costumized shapes - Sphere -->
     <div class="modal" id="modal-sphere">
@@ -546,24 +576,6 @@
                 />
               </div>
             </div>
-            <!-- <div class="two-inputs-wrapper">
-              <div class="input-element">
-                <p style="font-size: 14px; padding: 0px; margin: 0px">
-                  Bottom Radius:
-                </p>
-                <input
-                  type="number"
-                  value="0"
-                  id="bottom-radius-sphere-input"
-                />
-              </div>
-              <div class="input-element">
-                <p style="font-size: 14px; padding: 0px; margin: 0px">
-                  Zcenter:
-                </p>
-                <input type="number" value="1" id="z-center-sphere-input" />
-              </div>
-            </div> -->
 
             <!-- Material -->
             <div class="input-element">

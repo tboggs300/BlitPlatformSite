@@ -1,4 +1,4 @@
-import { getNumberOfPickedMeshes } from "../ActionsBar/ActionsBar.js";
+import { getNumberOfPickedMeshes } from "../ActionsBar/Create/CreateActions.js";
 
 export const chooseMaterial = (materialStr, scene) => {
   var material;
@@ -225,7 +225,7 @@ const createObjectContextMenu = (mesh, objectCompoenetContainer, scene) => {
     const zScaling = 4; // get scaling in Z from input
     const scaling = new BABYLON.Vector3(xScaling, yScaling, zScaling);
     mesh.scaling = scaling; // for scaling
-    // mesh.rotation = rotation // for rotation    
+    // mesh.rotation = rotation // for rotation
   });
 
   // Append the two childs to menu

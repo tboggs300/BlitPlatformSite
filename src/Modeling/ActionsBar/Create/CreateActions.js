@@ -1,14 +1,19 @@
-import { scene } from "../../../index.js";
-import { frameCamera } from "../Scene/BabylonScene.js";
-import createComponent from "../ObjectComponent/ObjectComponent.js";
-import { openCubeModal } from "./Modals/ModalCostumizedCube.js";
-import { openSphereModal } from "./Modals/ModalCostumizedSphere.js";
-import { openCylinderModal } from "./Modals/ModalCostumizedCylinder.js";
-import { chooseMaterial } from "../ObjectComponent/ContextMenu.js";
+import { scene } from "../../../../index.js";
+import { frameCamera } from "../../Scene/BabylonScene.js";
+import createComponent from "../../ObjectComponent/ObjectComponent.js";
+import { chooseMaterial } from "../../ObjectComponent/ContextMenu.js";
 
-import "./Modals/ModalCostumizedCube.js";
-import "./Modals/ModalCostumizedSphere.js";
-import "./Modals/ModalCostumizedCylinder.js";
+import { openCubeModal, closeCubeModal } from "./Modals/ModalCostumizedCube.js";
+import {
+  openSphereModal,
+  closeSphereModal,
+} from "./Modals/ModalCostumizedSphere.js";
+import {
+  openCylinderModal,
+  closeCylinderModal,
+} from "./Modals/ModalCostumizedCylinder.js";
+
+import {} from "./Modals/ModalCostumizedCube.js";
 
 // var ListOfMeshes = {};
 
@@ -173,6 +178,8 @@ export function createShape(meshType, buttonsClicks, shapeObj) {
 }
 
 const addSphere = (e) => {
+  closeCubeModal(e);
+  closeCylinderModal(e);
   openSphereModal(e).then(
     (resolve) => {
       $(".empty-scene").remove();
@@ -186,6 +193,8 @@ const addSphere = (e) => {
 };
 
 const addCube = (e) => {
+  closeSphereModal(e);
+  closeCylinderModal(e);
   openCubeModal(e).then(
     (resolve) => {
       $(".empty-scene").remove();
@@ -200,6 +209,8 @@ const addCube = (e) => {
 };
 
 const addCylinder = (e) => {
+  closeSphereModal(e);
+  closeCubeModal(e);
   openCylinderModal(e).then(
     (resolve) => {
       $(".empty-scene").remove();

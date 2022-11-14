@@ -38,7 +38,7 @@ export async function openSphereModal(e) {
   return promise;
 }
 
-function closeModal(e) {
+export function closeSphereModal(e) {
   modal.classList.remove("is-open");
   setTimeout(clearInputsField, 1000);
 }
@@ -58,7 +58,7 @@ function clearInputsField() {
   materialInput.value = "Default";
 }
 
-modalCancelBtn.addEventListener("click", closeModal);
+modalCancelBtn.addEventListener("click", closeSphereModal);
 modalOkBtn.addEventListener("click", submitFormHandler);
 
 /* ------------------- Input Evenet Listener ---------------------- */

@@ -1,4 +1,4 @@
-import { createShape, loadMesh } from "../ActionsBar/ActionsBar.js";
+import { createShape, loadMesh } from "../ActionsBar/Create/CreateActions.js";
 import { scene } from "../../../index.js";
 
 export function decrementCounter(meshType) {

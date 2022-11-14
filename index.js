@@ -6,7 +6,8 @@ import {
 } from "./src/Modeling/Scene/AxisViewScene.js";
 import { createVtkScene } from "./src/Simulation/Scene/VtkScene.js";
 
-import "./src/Modeling/ActionsBar/ActionsBar.js";
+import "./src/Modeling/ActionsBar/Create/CreateActions.js";
+import "./src/Modeling/ActionsBar/Transform/TransformActions.js";
 import "./src/Modeling/UndoRedo/Redo.js";
 
 const canvas = document.querySelectorAll("canvas")[0];

@@ -59,3 +59,42 @@ body {
   grid-area: app-content;
   height: 100%;
 }
+/* 
+.sphere-icon {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("./assets/ico.png");
+  height: 100%;
+  width: 100%;
+}
+
+.cube-icon {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("./assets/ico.png");
+  height: 100%;
+  width: 100%;
+}
+
+.cylinder-icon {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("./assets/ico.png");
+  height: 100%;
+  width: 100%;
+}
+
+#sphere-button {
+  width: 20px;
+}
+
+#cube-button {
+  width: 20px;
+}
+
+#cylinder-button {
+  width: 20px;
+} */

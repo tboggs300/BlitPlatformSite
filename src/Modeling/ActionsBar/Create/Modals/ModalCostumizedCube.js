@@ -41,7 +41,7 @@ export async function openCubeModal(e) {
   return promise;
 }
 
-function closeModal(e) {
+export function closeCubeModal(e) {
   modal.classList.remove("is-open");
   setTimeout(clearInputsField, 1000);
 }
@@ -62,7 +62,7 @@ function clearInputsField() {
   materialInput.value = "Default";
 }
 
-modalCancelBtn.addEventListener("click", closeModal);
+modalCancelBtn.addEventListener("click", closeCubeModal);
 modalOkBtn.addEventListener("click", submitFormHandler);
 
 /* ------------------- Input Evenet Listener ---------------------- */

@@ -1,0 +1,12 @@
+.transform .styled-button {
+  background-color: orange;
+  color: white;
+  border-color: rgb(255, 255, 255);
+  box-shadow: orange 0px 0px 5px 0px;
+}
+
+.transform .styled-button:hover {
+  background-color: rgba(255, 166, 0, 0.742);
+  color: white;
+  border-color: white;
+}
