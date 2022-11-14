@@ -208,9 +208,30 @@ const createObjectContextMenu = (mesh, objectCompoenetContainer, scene) => {
     }
   });
 
+  // ---------------- Modify Width and height ---------------
+  const itemModifyDimensions = document.createElement("li");
+  itemModifyDimensions.className = `item modifyItem`;
+  const modifyIcon = document.createElement("i");
+  modifyIcon.className = "icon modifyIcon";
+  const modifySpan = document.createElement("span");
+  modifySpan.innerText = "Size";
+  itemModifyDimensions.appendChild(modifyIcon);
+  itemModifyDimensions.appendChild(modifySpan);
+
+  itemModifyDimensions.addEventListener("click", () => {
+    // Add Input handling
+    // const xScaling = // get scaling in X from input
+    // const yScaling = // get scaling in Y from input
+    // const zScaling = // get scaling in Z from input
+    // const scaling = new BABYLON.Vector3(xScaling, yScaling, zScaling);
+    // mesh.scaling = scaling; // for scaling
+    // mesh.rotation = rotation // for rotation    
+  });
+
   // Append the two childs to menu
   menu.appendChild(itemMaterial);
   menu.appendChild(itemDelete);
+  menu.appendChild(itemModifyDimensions);
 
   objectContextMenu.appendChild(menu);
   document.body.appendChild(objectContextMenu);
