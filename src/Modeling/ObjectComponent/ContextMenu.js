@@ -220,11 +220,11 @@ const createObjectContextMenu = (mesh, objectCompoenetContainer, scene) => {
 
   itemModifyDimensions.addEventListener("click", () => {
     // Add Input handling
-    // const xScaling = // get scaling in X from input
-    // const yScaling = // get scaling in Y from input
-    // const zScaling = // get scaling in Z from input
-    // const scaling = new BABYLON.Vector3(xScaling, yScaling, zScaling);
-    // mesh.scaling = scaling; // for scaling
+    const xScaling = 2; // get scaling in X from input
+    const yScaling = 3; // get scaling in Y from input
+    const zScaling = 4; // get scaling in Z from input
+    const scaling = new BABYLON.Vector3(xScaling, yScaling, zScaling);
+    mesh.scaling = scaling; // for scaling
     // mesh.rotation = rotation // for rotation    
   });
 
