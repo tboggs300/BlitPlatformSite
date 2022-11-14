@@ -2,7 +2,7 @@ var modal = document.querySelector("#modal-cylinder");
 var modalCancelBtn = document.querySelector(".modal-cancel-button-cylinder");
 var modalOkBtn = document.querySelector(".modal-ok-button-cylinder");
 
-const nameInput = document.querySelector("#name-input-sphere");
+const nameInput = document.querySelector("#name-input-cylinder");
 const height = document.querySelector("#height-cylinder-input");
 const diameter = document.querySelector("#diameter-cylinder-input");
 const topDiameter = document.querySelector("#top-diameter-cylinder-input");
