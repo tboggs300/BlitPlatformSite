@@ -1,20 +1,20 @@
-var modal = document.querySelector(".modal");
-var modalCancelBtn = document.querySelector(".modal-cancel-button");
-var modalOkBtn = document.querySelector(".modal-ok-button");
+var modal = document.querySelector("#modal-cube");
+var modalCancelBtn = document.querySelector(".modal-cancel-button-cube");
+var modalOkBtn = document.querySelector(".modal-ok-button-cube");
 $(".modal").draggable();
 
-const nameInput = document.querySelector("#name-input");
+const nameInput = document.querySelector("#name-input-cube");
 const xminInput = document.querySelector("#x-min-input");
 const xmaxInput = document.querySelector("#x-max-input");
 const yminInput = document.querySelector("#y-min-input");
 const ymaxInput = document.querySelector("#y-max-input");
 const zminInput = document.querySelector("#z-min-input");
 const zmaxInput = document.querySelector("#z-max-input");
-const materialInput = document.querySelector("#material-input");
+const materialInput = document.querySelector("#material-input-cube");
 
 let cubeObj = {};
 
-export async function openModal(e) {
+export async function openCubeModal(e) {
   cubeObj["name"] = "cube";
   cubeObj["xmin"] = 0;
   cubeObj["xmax"] = 1;
@@ -25,7 +25,7 @@ export async function openModal(e) {
   cubeObj["material"] = "Default";
   e.preventDefault();
   var rect = e.target.getBoundingClientRect();
-  modal.style.left = `${rect.left - rect.left / 3}px`;
+  modal.style.left = `${rect.left - rect.left / 2.7}px`;
   modal.style.top = `${rect.top + 40}px`;
   modal.classList.add("is-open");
   let promise = new Promise((resolve, reject) => {

@@ -1,19 +1,6 @@
 import { scene } from "../../../index.js";
 
-const canvas = document.querySelectorAll("canvas")[0];
-
-const engine = new BABYLON.Engine(canvas, true, {});
-engine.disablePerformanceMonitorInBackground = true;
-engine.disableWebGL2Support = false;
-engine.preserveDrawingBuffer = false;
-engine.enableOfflineSupport = false;
-engine.doNotHandleContextLost = false;
-engine.loadingUIBackgroundColor = "#000000e1";
-window.addEventListener("resize", function () {
-  engine.resize();
-});
-
-export function createBabylonScene() {
+export function createBabylonScene(canvas, engine) {
   const scene = new BABYLON.Scene(engine);
   scene.clearColor = new BABYLON.Color4(0, 0, 0, 0);
   scene.autoClear = false;
@@ -73,7 +60,7 @@ export function createBabylonScene() {
     emptyScene.innerText = "Empty Scene";
     $(".sidebar-elements").append(emptyScene);
   }
-  return [scene, engine];
+  return scene;
 }
 
 export function frameCamera(radius = 1.5, mesh) {

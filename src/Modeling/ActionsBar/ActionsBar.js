@@ -1,9 +1,14 @@
 import { scene } from "../../../index.js";
 import { frameCamera } from "../Scene/BabylonScene.js";
 import createComponent from "../ObjectComponent/ObjectComponent.js";
-import "./ModalCostumizedShape.js";
-import { openModal } from "./ModalCostumizedShape.js";
+import { openCubeModal } from "./Modals/ModalCostumizedCube.js";
+import { openSphereModal } from "./Modals/ModalCostumizedSphere.js";
+import { openCylinderModal } from "./Modals/ModalCostumizedCylinder.js";
 import { chooseMaterial } from "../ObjectComponent/ContextMenu.js";
+
+import "./Modals/ModalCostumizedCube.js";
+import "./Modals/ModalCostumizedSphere.js";
+import "./Modals/ModalCostumizedCylinder.js";
 
 // var ListOfMeshes = {};
 
@@ -76,24 +81,37 @@ export function importSTLFile() {
 }
 
 // Create Shapes : Sphere, Cube, Cylinder --------------//
-export function createShape(meshType, buttonsClicks, cubeObj) {
+export function createShape(meshType, buttonsClicks, shapeObj) {
   let mesh;
   let objectCompoenetContainer;
   switch (meshType) {
     case "sphere":
+      let sphereObj = shapeObj;
+      console.log(sphereObj);
+
       mesh = BABYLON.MeshBuilder.CreateSphere(
-        meshType + buttonsClicks,
-        {},
+        sphereObj.name,
+        {
+          segments: sphereObj.segment,
+          diameter: sphereObj.diameter,
+          diameterX: sphereObj.xDiameter,
+          diameterY: sphereObj.yDiameter,
+          diameterZ: sphereObj.zDiameter,
+        },
         scene
       );
 
-      mesh.material = new BABYLON.NormalMaterial(meshType, scene);
+      // mesh.segments = 10;
+
+      // mesh.material = new BABYLON.NormalMaterial(meshType, scene);
+      mesh.material = chooseMaterial(sphereObj.material, scene);
 
       sphereButtonClicks += 1;
       objectCompoenetContainer = createComponent(mesh, "sphereIcon", scene);
 
       break;
     case "cube":
+      let cubeObj = shapeObj;
       mesh = BABYLON.MeshBuilder.CreateBox(cubeObj.name, {}, scene);
       mesh.position.x = cubeObj.xmin;
       mesh.position.y = cubeObj.ymin;
@@ -104,20 +122,32 @@ export function createShape(meshType, buttonsClicks, cubeObj) {
       mesh.material = chooseMaterial(cubeObj.material, scene);
       console.log(mesh);
 
-      frameCamera(1.5, mesh);
+      // frameCamera(1.5, mesh);
 
       cubeButtonClicks += 1;
       objectCompoenetContainer = createComponent(mesh, "cubeIcon", scene);
       break;
 
     case "cylinder":
+      let cylinderObj = shapeObj;
+      console.log(cylinderObj);
+
       mesh = BABYLON.MeshBuilder.CreateCylinder(
-        meshType + buttonsClicks,
-        {},
+        cylinderObj.name,
+        {
+          height: cylinderObj.height,
+          diameter: cylinderObj.diameter,
+          diameterTop: cylinderObj.topDiameter,
+          diameterBottom: cylinderObj.bottomDiameter,
+          tessellation: cylinderObj.tesselation,
+          subdivisions: cylinderObj.subdivisions,
+        },
         scene
       );
-      cylinderButtonClicks += 1;
-      mesh.material = new BABYLON.NormalMaterial(meshType, scene);
+
+      mesh.material = chooseMaterial(cylinderObj.material, scene);
+
+      // sphereButtonClicks += 1;
       objectCompoenetContainer = createComponent(mesh, "cylinderIcon", scene);
       break;
     default:
@@ -142,15 +172,25 @@ export function createShape(meshType, buttonsClicks, cubeObj) {
   return mesh;
 }
 
-// function showSpehreModal() {
-//   alert("sphere modal");
-// }
+const addSphere = (e) => {
+  openSphereModal(e).then(
+    (resolve) => {
+      $(".empty-scene").remove();
+      let sphereObj = resolve;
+      createShape("sphere", sphereButtonClicks, sphereObj);
+    },
+    (reject) => {
+      console.log(reject);
+    }
+  );
+};
 
 const addCube = (e) => {
-  openModal(e).then(
+  openCubeModal(e).then(
     (resolve) => {
       $(".empty-scene").remove();
       let cubeObj = resolve;
+      console.log(cubeObj);
       createShape("cube", cubeButtonClicks, cubeObj);
     },
     (reject) => {
@@ -159,28 +199,29 @@ const addCube = (e) => {
   );
 };
 
+const addCylinder = (e) => {
+  openCylinderModal(e).then(
+    (resolve) => {
+      $(".empty-scene").remove();
+      let cylinderObj = resolve;
+      createShape("cylinder", sphereButtonClicks, cylinderObj);
+    },
+    (reject) => {
+      console.log(reject);
+    }
+  );
+};
+
 var addSphereBtn = document.querySelector("#sphere-button");
-// addSphereBtn.addEventListener("click", addSphere);
+addSphereBtn.addEventListener("click", addSphere);
 
 var addCubeBtn = document.querySelector("#cube-button");
 addCubeBtn.addEventListener("click", addCube);
 
+var addCylinderBtn = document.querySelector("#cylinder-button");
+addCylinderBtn.addEventListener("click", addCylinder);
+
 $(document).ready(function () {
-  // $("#sphere-button").click(function () {
-  //   // showSpehreModal();
-  //   createShape("sphere", sphereButtonClicks);
-  // });
-
-  // $("#cube-button").click(function () {
-  //   $(".empty-scene").remove();
-  //   createShape("cube", cubeButtonClicks);
-  // });
-
-  // $("#cylinder-button").click(function () {
-  //   $(".empty-scene").remove();
-  //   createShape("cylinder", cylinderButtonClicks);
-  // });
-
   $(".upload-button").click(function () {
     importSTLFile();
   });

@@ -35,7 +35,7 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="./src/Modeling/ActionsBar/ModalCostumizedShape.css"
+      href="./src/Modeling/ActionsBar/Modals/ModalCostumizedCube.css"
     />
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
@@ -172,8 +172,197 @@
       style="z-index: 100; position: absolute"
     />
 
-    <!-- Actions Overlay Modal - Costumized shapes -->
-    <div class="modal">
+    <!-- Costumized shapes - Sphere -->
+    <div class="modal" id="modal-sphere">
+      <div class="modal__inner">
+        <div class="modal__header">
+          <h5 style="padding: 0px; margin: 0px; align-self: center">Sphere</h5>
+          <!-- <button class="modal__close">&#x2716;</button> -->
+        </div>
+        <div class="modal__content">
+          <div class="modal-inputs">
+            <!-- Name -->
+            <div class="input-element">
+              <p style="font-size: 14px; padding: 0px; margin: 0px">Name:</p>
+              <input type="text" value="sphere" id="name-input-sphere" />
+            </div>
+
+            <!-- Orientation -->
+            <!-- <div
+              style="display: flex; justify-content: space-between; width: 100%"
+            >
+              <p style="font-size: 14px; padding: 0px; margin: 0px">
+                Orientation:
+              </p>
+
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-around;
+                  align-items: center;
+                "
+              >
+                <input
+                  type="radio"
+                  id="contactChoice1"
+                  name="contact"
+                  value="email"
+                />
+                <label
+                  style="padding-right: 10px; font-size: 14px"
+                  for="contactChoice1"
+                  >X</label
+                >
+
+                <input
+                  type="radio"
+                  id="contactChoice2"
+                  name="contact"
+                  value="phone"
+                />
+                <label
+                  style="padding-right: 10px; font-size: 14px"
+                  for="contactChoice2"
+                  >Y</label
+                >
+
+                <input
+                  type="radio"
+                  id="contactChoice3"
+                  name="contact"
+                  value="mail"
+                />
+                <label style="font-size: 14px" for="contactChoice3">Z</label>
+              </div>
+            </div> -->
+
+            <!-- X -->
+            <div class="two-inputs-wrapper">
+              <div class="input-element">
+                <p
+                  title="diameter of the sphere"
+                  style="font-size: 14px; padding: 0px; margin: 0px"
+                >
+                  Diameter:
+                </p>
+                <input
+                  title="diameter of the sphere"
+                  type="number"
+                  value="1"
+                  id="diameter-sphere-input"
+                />
+              </div>
+              <div class="input-element">
+                <p
+                  title="diameter on X axis, overwrites diameter option"
+                  style="font-size: 14px; padding: 0px; margin: 0px"
+                >
+                  Diameter X:
+                </p>
+                <input
+                  title="diameter on X axis, overwrites diameter option"
+                  type="number"
+                  value="1"
+                  id="x-diameter-sphere-input"
+                />
+              </div>
+            </div>
+            <!-- Y -->
+            <div class="two-inputs-wrapper">
+              <div class="input-element">
+                <p
+                  title="diameter on Y axis, overwrites diameter option"
+                  style="font-size: 14px; padding: 0px; margin: 0px"
+                >
+                  Diameter Y:
+                </p>
+                <input
+                  title="diameter on Y axis, overwrites diameter option"
+                  type="number"
+                  value="1"
+                  id="y-diameter-sphere-input"
+                />
+              </div>
+              <div class="input-element">
+                <p
+                  title="diameter on Z axis, overwrites diameter option"
+                  style="font-size: 14px; padding: 0px; margin: 0px"
+                >
+                  Diameter Z:
+                </p>
+                <input
+                  title="diameter on Z axis, overwrites diameter option"
+                  type="number"
+                  value="1"
+                  id="z-diameter-sphere-input"
+                />
+              </div>
+            </div>
+            <!-- Z -->
+            <!-- <div class="two-inputs-wrapper">
+              <div class="input-element">
+                <p style="font-size: 14px; padding: 0px; margin: 0px">
+                  Bottom Radius:
+                </p>
+                <input
+                  type="number"
+                  value="0"
+                  id="bottom-radius-sphere-input"
+                />
+              </div>
+              <div class="input-element">
+                <p style="font-size: 14px; padding: 0px; margin: 0px">
+                  Zcenter:
+                </p>
+                <input type="number" value="1" id="z-center-sphere-input" />
+              </div>
+            </div> -->
+
+            <div class="two-inputs-wrapper">
+              <div class="input-element">
+                <p
+                  title="number of horizontal segments"
+                  style="font-size: 14px; padding: 0px; margin: 0px"
+                >
+                  Segments:
+                </p>
+                <input
+                  title="number of horizontal segments"
+                  type="number"
+                  value="32"
+                  id="segment-sphere-input"
+                />
+              </div>
+              <!-- Material -->
+              <div class="input-element">
+                <p style="font-size: 14px; padding: 0px; margin: 0px">
+                  Material:
+                </p>
+                <select
+                  name="material"
+                  id="material-input-sphere"
+                  form="materialForm"
+                >
+                  <option value="Default">Default</option>
+                  <option value="Red">Red</option>
+                  <option value="Green">Green</option>
+                  <option value="Blue">Blue</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button type="submit" class="modal-ok-button-sphere">OK</button>
+            <!-- <button>Preview</button> -->
+            <button class="modal-cancel-button-sphere">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <!-- /modal__content -->
+    </div>
+
+    <!-- Costumized shapes - Cube -->
+    <div class="modal" id="modal-cube">
       <div class="modal__inner">
         <div class="modal__header">
           <h5 style="padding: 0px; margin: 0px; align-self: center">Cube</h5>
@@ -185,47 +374,51 @@
             <!-- Name -->
             <div class="input-element">
               <p style="padding: 0px; margin: 0px">Name:</p>
-              <input type="text" value="cube" id="name-input" />
+              <input type="text" value="cube" id="name-input-cube" />
             </div>
 
             <!-- X -->
             <div class="two-inputs-wrapper">
               <div class="input-element">
                 <p style="padding: 0px; margin: 0px">Xmin:</p>
-                <input type="text" value="0" id="x-min-input" />
+                <input type="number" value="0" id="x-min-input" />
               </div>
               <div class="input-element">
                 <p style="padding: 0px; margin: 0px">Xmax:</p>
-                <input type="text" value="1" id="x-max-input" />
+                <input type="number" value="1" id="x-max-input" />
               </div>
             </div>
             <!-- Y -->
             <div class="two-inputs-wrapper">
               <div class="input-element">
                 <p style="padding: 0px; margin: 0px">Ymin:</p>
-                <input type="text" value="0" id="y-min-input" />
+                <input type="number" value="0" id="y-min-input" />
               </div>
               <div class="input-element">
                 <p style="padding: 0px; margin: 0px">Ymax:</p>
-                <input type="text" value="1" id="y-max-input" />
+                <input type="number" value="1" id="y-max-input" />
               </div>
             </div>
             <!-- Z -->
             <div class="two-inputs-wrapper">
               <div class="input-element">
                 <p style="padding: 0px; margin: 0px">Zmin:</p>
-                <input type="text" value="0" id="z-min-input" />
+                <input type="number" value="0" id="z-min-input" />
               </div>
               <div class="input-element">
                 <p style="padding: 0px; margin: 0px">Zmax:</p>
-                <input type="text" value="1" id="z-max-input" />
+                <input type="number" value="1" id="z-max-input" />
               </div>
             </div>
 
             <!-- Material -->
             <div class="input-element">
               <p style="padding: 0px; margin: 0px">Material:</p>
-              <select name="material" id="material-input" form="materialForm">
+              <select
+                name="material"
+                id="material-input-cube"
+                form="materialForm"
+              >
                 <option value="Default">Default</option>
                 <option value="Red">Red</option>
                 <option value="Green">Green</option>
@@ -234,9 +427,165 @@
             </div>
           </div>
           <div class="modal-actions">
-            <button type="submit" class="modal-ok-button">OK</button>
+            <button type="submit" class="modal-ok-button-cube">OK</button>
             <!-- <button>Preview</button> -->
-            <button class="modal-cancel-button">Cancel</button>
+            <button class="modal-cancel-button-cube">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <!-- /modal__content -->
+    </div>
+
+    <!-- Costumized shapes - Cylinder -->
+    <div class="modal" id="modal-cylinder">
+      <div class="modal__inner">
+        <div class="modal__header">
+          <h5 style="padding: 0px; margin: 0px; align-self: center">
+            Cylinder
+          </h5>
+          <!-- <button class="modal__close">&#x2716;</button> -->
+        </div>
+        <div class="modal__content">
+          <div class="modal-inputs">
+            <!-- Name -->
+            <div class="input-element">
+              <p style="font-size: 14px; padding: 0px; margin: 0px">Name:</p>
+              <input type="text" value="cylinder" id="name-input-cylinder" />
+            </div>
+
+            <!-- X -->
+            <div class="two-inputs-wrapper">
+              <div class="input-element">
+                <p
+                  title="diameter of both caps"
+                  style="font-size: 14px; padding: 0px; margin: 0px"
+                >
+                  Diameter:
+                </p>
+                <input
+                  title="diameter of both caps"
+                  type="number"
+                  value="1"
+                  id="diameter-cylinder-input"
+                />
+              </div>
+              <div class="input-element">
+                <p
+                  title="height of the cylinder"
+                  style="font-size: 14px; padding: 0px; margin: 0px"
+                >
+                  Height:
+                </p>
+                <input
+                  title="height of the cylinder"
+                  type="number"
+                  value="1"
+                  id="height-cylinder-input"
+                />
+              </div>
+            </div>
+            <!-- Y -->
+            <div class="two-inputs-wrapper">
+              <div class="input-element">
+                <p
+                  title="diameter of the top cap, can be zero to create a cone, overwrites the diameter option"
+                  style="font-size: 14px; padding: 0px; margin: 0px"
+                >
+                  Top Diameter:
+                </p>
+                <input
+                  title="diameter of the top cap, can be zero to create a cone, overwrites the diameter option"
+                  type="number"
+                  value="1"
+                  id="top-diameter-cylinder-input"
+                />
+              </div>
+              <div class="input-element">
+                <p
+                  title="number of radial sides"
+                  style="font-size: 14px; padding: 0px; margin: 0px"
+                >
+                  Tesselation:
+                </p>
+                <input
+                  title="number of radial sides"
+                  type="number"
+                  value="1"
+                  id="tesselation-cylinder-input"
+                />
+              </div>
+            </div>
+            <!-- Z -->
+            <div class="two-inputs-wrapper">
+              <div class="input-element">
+                <p
+                  title="diameter of the bottom cap, can't be zero, overwrites the diameter option"
+                  style="font-size: 12.2px; padding: 0px; margin: 0px"
+                >
+                  Bottom Diameter:
+                </p>
+                <input
+                  title="diameter of the bottom cap, can't be zero, overwrites the diameter option"
+                  type="number"
+                  value="1"
+                  id="bottom-diameter-cylinder-input"
+                />
+              </div>
+              <div class="input-element">
+                <p
+                  title="number of rings"
+                  style="font-size: 14px; padding: 0px; margin: 0px"
+                >
+                  Subdivisions:
+                </p>
+                <input
+                  title="number of rings"
+                  type="number"
+                  value="1"
+                  id="subdivisions-cylinder-input"
+                />
+              </div>
+            </div>
+            <!-- <div class="two-inputs-wrapper">
+              <div class="input-element">
+                <p style="font-size: 14px; padding: 0px; margin: 0px">
+                  Bottom Radius:
+                </p>
+                <input
+                  type="number"
+                  value="0"
+                  id="bottom-radius-sphere-input"
+                />
+              </div>
+              <div class="input-element">
+                <p style="font-size: 14px; padding: 0px; margin: 0px">
+                  Zcenter:
+                </p>
+                <input type="number" value="1" id="z-center-sphere-input" />
+              </div>
+            </div> -->
+
+            <!-- Material -->
+            <div class="input-element">
+              <p style="font-size: 14px; padding: 0px; margin: 0px">
+                Material:
+              </p>
+              <select
+                name="material"
+                id="material-input-cylinder"
+                form="materialForm"
+              >
+                <option value="Default">Default</option>
+                <option value="Red">Red</option>
+                <option value="Green">Green</option>
+                <option value="Blue">Blue</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button type="submit" class="modal-ok-button-cylinder">OK</button>
+            <!-- <button>Preview</button> -->
+            <button class="modal-cancel-button-cylinder">Cancel</button>
           </div>
         </div>
       </div>

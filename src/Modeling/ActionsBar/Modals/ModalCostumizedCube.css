@@ -16,7 +16,7 @@
   transition: 0.2s ease-in-out;
   opacity: 0;
   height: 65%;
-  width: 30%;
+  width: 37%;
 }
 
 .modal.is-open {
@@ -111,4 +111,8 @@ select {
 
 button {
   height: 1.5rem;
+}
+
+p {
+  font-size: 14px;
 }
