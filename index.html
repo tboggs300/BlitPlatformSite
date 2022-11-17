@@ -42,6 +42,11 @@
       type="text/css"
       href="./src/Modeling/ActionsBar/Create/Modals/ModalCostumizedShape.css"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./src/Modeling/ActionsBar/Transform/Modals/ModalTransform.css"
+    />
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
     <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
@@ -598,6 +603,129 @@
             <button type="submit" class="modal-ok-button-cylinder">OK</button>
             <!-- <button>Preview</button> -->
             <button class="modal-cancel-button-cylinder">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <!-- /modal__content -->
+    </div>
+
+    <!-- Transform Shape - Translate -->
+    <div class="modal-transform" id="modal-translate">
+      <div class="modal__inner__transform">
+        <div class="modal__header__transform">
+          <h5 style="padding: 0px; margin: 0px; align-self: center">
+            Translate Object
+          </h5>
+        </div>
+        <div class="modal__content__transform">
+          <div class="modal-inputs-transform">
+            <!-- Translate X -->
+            <div class="input-element-transform">
+              <p style="font-size: 14px; padding: 0px; margin: 0px">X Axis:</p>
+              <input
+                type="number"
+                value="0"
+                step="0.1"
+                id="translate-x-input"
+              />
+            </div>
+            <!-- Translate Y -->
+            <div class="input-element-transform">
+              <p style="font-size: 14px; padding: 0px; margin: 0px">Y Axis:</p>
+              <input
+                type="number"
+                value="0"
+                step="0.1"
+                id="translate-y-input"
+              />
+            </div>
+            <!-- Translate Z -->
+            <div class="input-element-transform">
+              <p style="font-size: 14px; padding: 0px; margin: 0px">Z Axis:</p>
+              <input
+                type="number"
+                value="0"
+                step="0.1"
+                id="translate-z-input"
+              />
+            </div>
+          </div>
+          <div class="modal-actions-transform">
+            <button type="submit" class="modal-ok-button-translate">OK</button>
+            <!-- <button>Preview</button> -->
+            <button class="modal-cancel-button-translate">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <!-- /modal__content -->
+    </div>
+
+    <!-- Transform Shape - Rotate -->
+    <div class="modal-transform" id="modal-rotate">
+      <div class="modal__inner__transform">
+        <div class="modal__header__transform">
+          <h5 style="padding: 0px; margin: 0px; align-self: center">
+            Rotate Object
+          </h5>
+        </div>
+        <div class="modal__content__transform">
+          <div class="modal-inputs-transform">
+            <!-- rotate X -->
+            <div class="input-element-transform">
+              <p style="font-size: 14px; padding: 0px; margin: 0px">X Axis:</p>
+              <input type="number" value="0" step="1" id="rotate-x-input" />
+            </div>
+            <!-- rotate Y -->
+            <div class="input-element-transform">
+              <p style="font-size: 14px; padding: 0px; margin: 0px">Y Axis:</p>
+              <input type="number" value="0" step="1" id="rotate-y-input" />
+            </div>
+            <!-- rotate Z -->
+            <div class="input-element-transform">
+              <p style="font-size: 14px; padding: 0px; margin: 0px">Z Axis:</p>
+              <input type="number" value="0" step="1" id="rotate-z-input" />
+            </div>
+          </div>
+          <div class="modal-actions-transform">
+            <button type="submit" class="modal-ok-button-rotate">OK</button>
+            <!-- <button>Preview</button> -->
+            <button class="modal-cancel-button-rotate">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <!-- /modal__content -->
+    </div>
+
+    <!-- Transform Shape - Scale -->
+    <div class="modal-transform" id="modal-scale">
+      <div class="modal__inner__transform">
+        <div class="modal__header__transform">
+          <h5 style="padding: 0px; margin: 0px; align-self: center">
+            Scale Object
+          </h5>
+        </div>
+        <div class="modal__content__transform">
+          <div class="modal-inputs-transform">
+            <!-- Scale X -->
+            <div class="input-element-transform">
+              <p style="font-size: 14px; padding: 0px; margin: 0px">X Axis:</p>
+              <input type="number" value="0" step="0.01" id="scale-x-input" />
+            </div>
+            <!-- scale Y -->
+            <div class="input-element-transform">
+              <p style="font-size: 14px; padding: 0px; margin: 0px">Y Axis:</p>
+              <input type="number" value="0" step="0.01" id="scale-y-input" />
+            </div>
+            <!-- scale Z -->
+            <div class="input-element-transform">
+              <p style="font-size: 14px; padding: 0px; margin: 0px">Z Axis:</p>
+              <input type="number" value="0" step="0.01" id="scale-z-input" />
+            </div>
+          </div>
+          <div class="modal-actions-transform">
+            <button type="submit" class="modal-ok-button-scale">OK</button>
+            <!-- <button>Preview</button> -->
+            <button class="modal-cancel-button-scale">Cancel</button>
           </div>
         </div>
       </div>
