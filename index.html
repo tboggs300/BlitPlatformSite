@@ -47,6 +47,11 @@
       type="text/css"
       href="./src/Modeling/ActionsBar/Transform/Modals/ModalTransform.css"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./src/Modeling/ActionsBar/Operate/Operate.css"
+    />
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
     <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
@@ -92,8 +97,17 @@
           <div class="grid">
             <!-- Scene Explorer -->
             <aside class="scene-explorer">
-              <h3 style="padding-left: 1rem">Objects</h3>
-              <div class="sidebar-elements"></div>
+              <div style="display: flex; justify-content: space-evenly">
+                <h3 style="padding-left: 1rem">Objects</h3>
+                <h6
+                  id="create-container-button"
+                  class="create-container-button"
+                >
+                  Create Container
+                </h6>
+              </div>
+
+              <div id="target" class="sidebar-elements"></div>
             </aside>
 
             <!-- Create - Transform - Operate -->
@@ -172,7 +186,29 @@
                   </div>
                 </div>
 
-                <div style="color: #90a0b7" class="operate">operate</div>
+                <div style="color: #90a0b7" class="operate">
+                  <div style="display: grid; justify-items: center">
+                    <div style="display: flex; justify-content: space-between">
+                      <div id="union-button" class="styled-button">
+                        <!-- <p style="font-size: 14px; margin: 0px">Sphere</p> -->
+                        <p style="font-size: 14px; margin: 0px">Merge</p>
+                      </div>
+                      <div id="subtract-button" class="styled-button">
+                        <p style="font-size: 14px; margin: 0px">Subtract</p>
+                      </div>
+                    </div>
+                    <p
+                      style="
+                        font-size: 12px;
+                        margin: 2px;
+                        padding-top: 4px;
+                        color: #90a0b7;
+                      "
+                    >
+                      Operate on Shape
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 

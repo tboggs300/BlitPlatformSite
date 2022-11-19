@@ -59,42 +59,31 @@ body {
   grid-area: app-content;
   height: 100%;
 }
-/* 
-.sphere-icon {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-image: url("./assets/ico.png");
-  height: 100%;
-  width: 100%;
+
+.create-container-button {
+  cursor: pointer;
+  background-color: black;
+  padding: 2px 4px;
+  border-radius: 4px;
+  color: white;
 }
 
-.cube-icon {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-image: url("./assets/ico.png");
-  height: 100%;
-  width: 100%;
+.create-container-button:hover {
+  background-color: rgba(0, 0, 0, 0.82);
 }
 
-.cylinder-icon {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-image: url("./assets/ico.png");
-  height: 100%;
-  width: 100%;
+.asset-container {
+  height: max-content;
+  padding: 4px;
+  padding-bottom: 30px;
+  background-color: rgba(0, 0, 0, 0.279);
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
 }
 
-#sphere-button {
-  width: 20px;
+.asset-container-header {
+  display: flex;
+  justify-content: space-between;
 }
-
-#cube-button {
-  width: 20px;
-}
-
-#cylinder-button {
-  width: 20px;
-} */

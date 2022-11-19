@@ -1,0 +1,12 @@
+.operate .styled-button {
+  background-color: dodgerblue;
+  color: white;
+  border-color: rgb(255, 255, 255);
+  box-shadow: dodgerblue 0px 0px 5px 0px;
+}
+
+.operate .styled-button:hover {
+  background-color: rgba(30, 143, 255, 0.886);
+  color: white;
+  border-color: white;
+}

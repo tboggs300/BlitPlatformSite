@@ -231,7 +231,7 @@ const createObjectContextMenu = (mesh, objectCompoenetContainer, scene) => {
   // Append the two childs to menu
   menu.appendChild(itemMaterial);
   menu.appendChild(itemDelete);
-  menu.appendChild(itemModifyDimensions);
+  // menu.appendChild(itemModifyDimensions);
 
   objectContextMenu.appendChild(menu);
   document.body.appendChild(objectContextMenu);

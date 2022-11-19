@@ -86,7 +86,7 @@ export function importSTLFile() {
 }
 
 // Create Shapes : Sphere, Cube, Cylinder --------------//
-export function createShape(meshType, buttonsClicks, shapeObj) {
+export function createShape(meshType, uniqueId, shapeObj) {
   let mesh;
   let objectCompoenetContainer;
   switch (meshType) {
@@ -111,28 +111,40 @@ export function createShape(meshType, buttonsClicks, shapeObj) {
       // mesh.material = new BABYLON.NormalMaterial(meshType, scene);
       mesh.material = chooseMaterial(sphereObj.material, scene);
 
-      sphereButtonClicks += 1;
-      objectCompoenetContainer = createComponent(mesh, "sphereIcon", scene);
+      objectCompoenetContainer = createComponent(
+        mesh,
+        "sphereIcon",
+        uniqueId,
+        scene
+      );
 
       break;
     case "cube":
       let cubeObj = shapeObj;
       mesh = BABYLON.MeshBuilder.CreateBox(cubeObj.name, {}, scene);
-      mesh.position.x = cubeObj.xmin;
-      mesh.position.y = cubeObj.ymin;
-      mesh.position.z = cubeObj.zmin;
+
+      // mesh.height = Math.abs(cubeObj.ymax) + Math.abs(cubeObj.ymin);
+
       mesh.scaling.x = cubeObj.xmax - cubeObj.xmin;
       mesh.scaling.y = cubeObj.ymax - cubeObj.ymin;
       mesh.scaling.z = cubeObj.zmax - cubeObj.zmin;
+
+      mesh.position.x = (cubeObj.xmax - cubeObj.xmin) / 2;
+      mesh.position.y = (cubeObj.ymax - cubeObj.ymin) / 2;
+      mesh.position.z = (cubeObj.zmax - cubeObj.zmin) / 2;
+
       mesh.material = chooseMaterial(cubeObj.material, scene);
       console.log(mesh);
 
       // frameCamera(1.5, mesh);
 
-      cubeButtonClicks += 1;
-      objectCompoenetContainer = createComponent(mesh, "cubeIcon", scene);
+      objectCompoenetContainer = createComponent(
+        mesh,
+        "cubeIcon",
+        uniqueId,
+        scene
+      );
       break;
-
     case "cylinder":
       let cylinderObj = shapeObj;
       console.log(cylinderObj);
@@ -152,8 +164,12 @@ export function createShape(meshType, buttonsClicks, shapeObj) {
 
       mesh.material = chooseMaterial(cylinderObj.material, scene);
 
-      // sphereButtonClicks += 1;
-      objectCompoenetContainer = createComponent(mesh, "cylinderIcon", scene);
+      objectCompoenetContainer = createComponent(
+        mesh,
+        "cylinderIcon",
+        uniqueId,
+        scene
+      );
       break;
     default:
       console.log("default");
@@ -162,15 +178,13 @@ export function createShape(meshType, buttonsClicks, shapeObj) {
 
   actions.push({
     mesh: mesh,
-    meshId: buttonsClicks,
+    meshId: uniqueId,
     action: "add",
     objectCompoenetContainer: objectCompoenetContainer,
     type: meshType,
   });
 
   console.log(actions);
-
-  buttonsClicks = buttonsClicks + 1;
   if (getNumberOfPickedMeshes() > 0) {
     mesh.visibility = 0.5;
   }
@@ -184,7 +198,8 @@ const addSphere = (e) => {
     (resolve) => {
       $(".empty-scene").remove();
       let sphereObj = resolve;
-      createShape("sphere", sphereButtonClicks, sphereObj);
+      let uniqueId = Date.now();
+      createShape("sphere", uniqueId, sphereObj);
     },
     (reject) => {
       console.log(reject);
@@ -200,7 +215,8 @@ const addCube = (e) => {
       $(".empty-scene").remove();
       let cubeObj = resolve;
       console.log(cubeObj);
-      createShape("cube", cubeButtonClicks, cubeObj);
+      let uniqueId = Date.now();
+      createShape("cube", uniqueId, cubeObj);
     },
     (reject) => {
       console.log(reject);
@@ -215,7 +231,8 @@ const addCylinder = (e) => {
     (resolve) => {
       $(".empty-scene").remove();
       let cylinderObj = resolve;
-      createShape("cylinder", sphereButtonClicks, cylinderObj);
+      let uniqueId = Date.now();
+      createShape("cylinder", uniqueId, cylinderObj);
     },
     (reject) => {
       console.log(reject);

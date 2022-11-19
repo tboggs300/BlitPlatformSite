@@ -8,6 +8,7 @@ import { createVtkScene } from "./src/Simulation/Scene/VtkScene.js";
 
 import "./src/Modeling/ActionsBar/Create/CreateActions.js";
 import "./src/Modeling/ActionsBar/Transform/TransformActions.js";
+import "./src/Modeling/ActionsBar/Operate/Operate.js";
 import "./src/Modeling/UndoRedo/Redo.js";
 
 const canvas = document.querySelectorAll("canvas")[0];
@@ -89,3 +90,18 @@ $(document).ready(function () {
 //Recactoring? toggle the class names? instead of add and remove, and then somehow for the modal overlay?
 
 // More advanced make this in prototyping/oop JS
+
+const sideBarElement = document.querySelector("#target");
+
+sideBarElement.addEventListener("dragover", (ev) => {
+  if (!ev.target.classList.contains("objComp")) {
+    ev.preventDefault();
+  }
+  ev.dataTransfer.dropEffect = "move";
+});
+
+sideBarElement.addEventListener("drop", (ev) => {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("application/my-app");
+  ev.target.appendChild(document.getElementById(data));
+});

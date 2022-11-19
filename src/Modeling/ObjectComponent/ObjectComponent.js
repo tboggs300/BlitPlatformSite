@@ -2,12 +2,20 @@ import createObjectContextMenu from "./ContextMenu.js";
 import { getNumberOfPickedMeshes } from "../ActionsBar/Create/CreateActions.js";
 
 import { gizmo } from "../ActionsBar/Transform/TransformActions.js";
+import "./Collection.js";
 // import { scene } from "../../index.js";
 
-export default function createComponent(mesh, meshIcon, scene) {
+export default function createComponent(mesh, meshIcon, uniqueId, scene) {
   const objectCompoenetContainer = document.createElement("div");
-  objectCompoenetContainer.className = "objectInTheScene";
-  objectCompoenetContainer.id = mesh.id;
+  objectCompoenetContainer.className = "objectInTheScene objComp";
+  objectCompoenetContainer.id = uniqueId;
+  objectCompoenetContainer.draggable = true;
+
+  objectCompoenetContainer.addEventListener("dragstart", (ev) => {
+    // ev.preventDefault();
+    ev.dataTransfer.setData("application/my-app", ev.target.id);
+    ev.dataTransfer.dropEffect = "move";
+  });
 
   const MeshObject = {
     HtmlElement: objectCompoenetContainer,
@@ -20,25 +28,25 @@ export default function createComponent(mesh, meshIcon, scene) {
 
   // Object Icon and Name
   const objIcon = document.createElement("p");
-  objIcon.className = `objIcon ${meshIcon}`;
+  objIcon.className = `objIcon ${meshIcon} objComp`;
   const objName = document.createElement("p");
   objName.innerText = mesh.name;
-  objName.className = "objName";
+  objName.className = "objName objComp";
   objectCompoenetContainer.appendChild(objIcon);
   objectCompoenetContainer.appendChild(objName);
 
   // Toggle mesh Visivility
   const hideShowBtn = document.createElement("button");
-  hideShowBtn.className = "hideShow show";
+  hideShowBtn.className = "hideShow show objComp";
   hideShowBtn.title = "hide";
   hideShowBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     if (mesh.isEnabled()) {
-      e.target.className = "hideShow hide";
+      e.target.className = "hideShow hide objComp";
       hideShowBtn.title = "show";
       mesh.setEnabled(false);
     } else {
-      e.target.className = "hideShow show";
+      e.target.className = "hideShow show objComp";
       hideShowBtn.title = "hide";
       mesh.setEnabled(true);
     }
@@ -65,7 +73,6 @@ export default function createComponent(mesh, meshIcon, scene) {
       //   console.log(value);
       // });
     }
-
     // When user select a mesh
     else {
       if (event.ctrlKey == false) {
@@ -78,6 +85,7 @@ export default function createComponent(mesh, meshIcon, scene) {
       mesh.visibility = 1;
       //   ListOfMeshes[mesh.id].isSelected = true;
     }
+
     scene.meshes.forEach((mesh) => {
       // If no mesh is selected
       if (mesh.showBoundingBox === false && getNumberOfPickedMeshes() == 0) {
@@ -91,6 +99,11 @@ export default function createComponent(mesh, meshIcon, scene) {
         mesh.visibility = 0.5;
       }
     });
+
+    // objectCompoenetContainer.addEventListener("drop", (ev) => {
+    //   ev.preventDefault();
+    //   alert("you cant drag here");
+    // });
 
     // object componenet highlight
     // console.log(Object.keys(ListOfMeshes).length);
