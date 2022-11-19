@@ -15,7 +15,7 @@ export function createBabylonScene(canvas, engine) {
     BABYLON.Vector3.Zero(),
     scene
   );
-  camera.zoomToMouseLocation = true;
+  // camera.zoomToMouseLocation = true;
   camera.wheelDeltaPercentage = 0.03;
 
   // Enable mouse wheel inputs.

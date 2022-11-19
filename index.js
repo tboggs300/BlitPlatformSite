@@ -28,6 +28,23 @@ const axisViewScene = createAxisViewScene(canvas, engine);
 
 // scene.debugLayer.show();
 
+var groundMaterial = new BABYLON.GridMaterial("groundMaterial", scene);
+groundMaterial.majorUnitFrequency = 5;
+groundMaterial.minorUnitVisibility = 0.5;
+groundMaterial.gridRatio = 2;
+groundMaterial.opacity = 0.99;
+groundMaterial.useMaxLine = true;
+groundMaterial.mainColor = new BABYLON.Color3(95 / 255, 158 / 255, 160 / 255);
+groundMaterial.lineColor = new BABYLON.Color3(95 / 255, 158 / 255, 160 / 255);
+
+var ground = BABYLON.MeshBuilder.CreateGround(
+  "ground",
+  { width: 100, height: 100 },
+  scene,
+  false
+);
+ground.material = groundMaterial;
+
 engine.runRenderLoop(function () {
   scene.render();
   axisViewScene.render();
