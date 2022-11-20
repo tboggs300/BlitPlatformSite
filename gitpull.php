@@ -1,3 +1,3 @@
 <?php
-exec("cd /var/www/blitai && git reset --hard HEAD && git pull");
+exec("cd /var/www/html && git reset --hard HEAD && git pull");
 ?>
