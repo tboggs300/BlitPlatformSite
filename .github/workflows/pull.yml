@@ -6,7 +6,7 @@ on:
   push:
 
 jobs:
-  tns_compare:
+  git_pull:
     runs-on: ubuntu-latest
 
     steps:
