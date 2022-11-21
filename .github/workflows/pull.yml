@@ -1,0 +1,14 @@
+# This is a workflow for automatically pulling the latest changes triggered on new commits and publishing them live
+
+name: Pull from main branch
+
+on:
+  push:
+
+jobs:
+  tns_compare:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Publish latest commit
+      run: curl -L https://www.blit.ai/gitpull.php
