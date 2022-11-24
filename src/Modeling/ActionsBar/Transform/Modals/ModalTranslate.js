@@ -8,23 +8,23 @@ const translateY = document.querySelector("#translate-y-input");
 const translateZ = document.querySelector("#translate-z-input");
 
 let currentMesh = null;
+let selectedMeshesInScene;
 
-export async function openTranslateModal(e, selectedMesh, gizmo) {
-  currentMesh = selectedMesh;
-
-  translateX.value = parseFloat(selectedMesh.position.x).toFixed(1);
-  translateY.value = parseFloat(selectedMesh.position.y).toFixed(1);
-  translateZ.value = parseFloat(selectedMesh.position.z).toFixed(1);
-
-  gizmo.xGizmo.onSnapObservable.add((event) => {
+export async function openTranslateModal(e, selectedMeshes) {
+  selectedMeshesInScene = selectedMeshes;
+  let selectedMesh;
+  if (selectedMeshes.length === 1) {
+    selectedMesh = selectedMeshes[0];
+    currentMesh = selectedMesh;
     translateX.value = parseFloat(selectedMesh.position.x).toFixed(1);
-  });
-  gizmo.yGizmo.onSnapObservable.add((event) => {
     translateY.value = parseFloat(selectedMesh.position.y).toFixed(1);
-  });
-  gizmo.zGizmo.onSnapObservable.add((event) => {
     translateZ.value = parseFloat(selectedMesh.position.z).toFixed(1);
-  });
+  } else {
+    currentMesh = selectedMesh;
+    translateX.value = 0;
+    translateY.value = 0;
+    translateZ.value = 0;
+  }
 
   e.preventDefault();
   var rect = e.target.getBoundingClientRect();
@@ -44,14 +44,7 @@ export async function openTranslateModal(e, selectedMesh, gizmo) {
   return promise;
 }
 
-export function closeTranslateModal(e, xt, yt, zt) {
-  if (currentMesh !== null) {
-    currentMesh.position.x = xt;
-    currentMesh.position.y = yt;
-    currentMesh.position.z = zt;
-    console.log(xt, yt, zt);
-  }
-
+export function closeTranslateModal(e) {
   modal.classList.remove("is-open");
 }
 
@@ -68,12 +61,40 @@ translateX.addEventListener("change", updateTranslateXInput);
 translateY.addEventListener("change", updateTranslateYInput);
 translateZ.addEventListener("change", updateTranslateZInput);
 
+var previousXValue = 0;
+var previousYValue = 0;
+var previousZValue = 0;
+
 function updateTranslateXInput(e) {
-  currentMesh.position.x = parseFloat(e.target.value);
+  if (selectedMeshesInScene.length === 1) {
+    currentMesh.position.x = parseFloat(e.target.value);
+  } else {
+    selectedMeshesInScene.forEach((mesh) => {
+      mesh.position.x =
+        mesh.position.x + parseFloat(e.target.value - previousXValue);
+    });
+    previousXValue = parseFloat(e.target.value);
+  }
 }
 function updateTranslateYInput(e) {
-  currentMesh.position.y = parseFloat(e.target.value);
+  if (selectedMeshesInScene.length === 1) {
+    currentMesh.position.y = parseFloat(e.target.value);
+  } else {
+    selectedMeshesInScene.forEach((mesh) => {
+      mesh.position.y =
+        mesh.position.y + parseFloat(e.target.value - previousYValue);
+    });
+    previousYValue = parseFloat(e.target.value);
+  }
 }
 function updateTranslateZInput(e) {
-  currentMesh.position.z = parseFloat(e.target.value);
+  if (selectedMeshesInScene.length === 1) {
+    currentMesh.position.z = parseFloat(e.target.value);
+  } else {
+    selectedMeshesInScene.forEach((mesh) => {
+      mesh.position.z =
+        mesh.position.z + parseFloat(e.target.value - previousZValue);
+    });
+    previousZValue = parseFloat(e.target.value);
+  }
 }

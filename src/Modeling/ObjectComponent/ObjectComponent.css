@@ -2,12 +2,14 @@
   display: grid;
   grid-template-areas: "objIcon objName hideShow";
   grid-template-columns: 15% 70% 15%;
-  border-radius: 0.5rem;
+  border-radius: 0.2rem;
   padding: 7px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
 .objectInTheScene:hover {
-  background: #dfdfdf;
+  box-shadow: rgba(99, 99, 99, 0.379) 0px 2px 8px 0px;
   cursor: pointer;
 }
 

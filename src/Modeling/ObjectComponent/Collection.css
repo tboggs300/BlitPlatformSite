@@ -1,0 +1,42 @@
+.asset-container {
+  height: max-content;
+  padding: 4px;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  padding-left: 10px;
+  /* box-shadow: rgba(99, 99, 99, 0.667) 0px 2px 8px 0px; */
+  background-color: whitesmoke;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.asset-container-header {
+  display: flex;
+  padding-bottom: 3px;
+}
+
+.selectAll {
+  background: transparent;
+  background-image: url("./assets/unselect.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-width: 0px;
+  width: 16px;
+  margin-right: 0.7rem;
+}
+
+.selectAll:hover {
+  cursor: pointer;
+  background-color: whitesmoke;
+}
+
+.unselect {
+  background-image: url("./assets/unselect.png");
+}
+
+.select {
+  background-image: url("./assets/select.png");
+}

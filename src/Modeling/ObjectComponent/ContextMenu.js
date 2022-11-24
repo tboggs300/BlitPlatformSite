@@ -1,4 +1,5 @@
 import { getNumberOfPickedMeshes } from "../ActionsBar/Create/CreateActions.js";
+import { createContainer } from "./Collection.js";
 
 export const chooseMaterial = (materialStr, scene) => {
   var material;
@@ -164,11 +165,8 @@ const createObjectContextMenu = (mesh, objectCompoenetContainer, scene) => {
   // --------------- Delete ---------------
   const itemDelete = document.createElement("li");
   itemDelete.className = `item deleteItem ${mesh.id}`;
-  const deleteIcon = document.createElement("i");
-  deleteIcon.className = "icon deleteIcon";
   const deleteSpan = document.createElement("span");
   deleteSpan.innerText = "Delete";
-  itemDelete.appendChild(deleteIcon);
   itemDelete.appendChild(deleteSpan);
 
   itemDelete.addEventListener("click", () => {
@@ -208,6 +206,16 @@ const createObjectContextMenu = (mesh, objectCompoenetContainer, scene) => {
     }
   });
 
+  const itemCreateContainer = document.createElement("li");
+  itemCreateContainer.className = `item  ${mesh.id}`;
+  const createContainerSpan = document.createElement("span");
+  createContainerSpan.innerText = "Create Container";
+  itemCreateContainer.appendChild(createContainerSpan);
+  itemCreateContainer.addEventListener("click", () => {
+    const assetContainer = createContainer();
+    assetContainer.appendChild(objectCompoenetContainer);
+  });
+
   // ---------------- Modify Width and height ---------------
   const itemModifyDimensions = document.createElement("li");
   itemModifyDimensions.className = `item modifyItem`;
@@ -230,8 +238,8 @@ const createObjectContextMenu = (mesh, objectCompoenetContainer, scene) => {
 
   // Append the two childs to menu
   menu.appendChild(itemMaterial);
+  menu.appendChild(itemCreateContainer);
   menu.appendChild(itemDelete);
-  // menu.appendChild(itemModifyDimensions);
 
   objectContextMenu.appendChild(menu);
   document.body.appendChild(objectContextMenu);

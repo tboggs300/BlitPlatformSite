@@ -50,8 +50,6 @@ export function loadMesh(fileName, url, extension, s) {
         objectCompoenetContainer: objectCompoenetContainer,
         type: "mesh",
       });
-
-      console.log(actions);
     },
     null,
     null,
@@ -92,8 +90,6 @@ export function createShape(meshType, uniqueId, shapeObj) {
   switch (meshType) {
     case "sphere":
       let sphereObj = shapeObj;
-      console.log(sphereObj);
-
       mesh = BABYLON.MeshBuilder.CreateSphere(
         sphereObj.name,
         {
@@ -109,6 +105,8 @@ export function createShape(meshType, uniqueId, shapeObj) {
       // mesh.segments = 10;
 
       // mesh.material = new BABYLON.NormalMaterial(meshType, scene);
+
+      mesh.id = `${uniqueId}`;
       mesh.material = chooseMaterial(sphereObj.material, scene);
 
       objectCompoenetContainer = createComponent(
@@ -134,6 +132,7 @@ export function createShape(meshType, uniqueId, shapeObj) {
       mesh.position.z =
         (parseFloat(cubeObj.zmax) + parseFloat(cubeObj.zmin)) / 2;
 
+      mesh.id = `${uniqueId}`;
       mesh.material = chooseMaterial(cubeObj.material, scene);
 
       // frameCamera(1.5, mesh);
@@ -147,7 +146,6 @@ export function createShape(meshType, uniqueId, shapeObj) {
       break;
     case "cylinder":
       let cylinderObj = shapeObj;
-      console.log(cylinderObj);
 
       mesh = BABYLON.MeshBuilder.CreateCylinder(
         cylinderObj.name,
@@ -162,6 +160,7 @@ export function createShape(meshType, uniqueId, shapeObj) {
         scene
       );
 
+      mesh.id = `${uniqueId}`;
       mesh.material = chooseMaterial(cylinderObj.material, scene);
 
       objectCompoenetContainer = createComponent(
@@ -174,6 +173,7 @@ export function createShape(meshType, uniqueId, shapeObj) {
     default:
       console.log("default");
   }
+
   $(".sidebar-elements").append(objectCompoenetContainer);
 
   actions.push({
@@ -184,7 +184,6 @@ export function createShape(meshType, uniqueId, shapeObj) {
     type: meshType,
   });
 
-  console.log(actions);
   if (getNumberOfPickedMeshes() > 0) {
     mesh.visibility = 0.5;
   }
@@ -214,7 +213,6 @@ const addCube = (e) => {
     (resolve) => {
       $(".empty-scene").remove();
       let cubeObj = resolve;
-      console.log(cubeObj);
       let uniqueId = Date.now();
       createShape("cube", uniqueId, cubeObj);
     },

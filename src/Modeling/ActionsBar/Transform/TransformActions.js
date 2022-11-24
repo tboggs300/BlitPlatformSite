@@ -1,13 +1,9 @@
 // import { getNumberOfPickedMeshes } from "../Create/CreateActions";
 
 import { scene } from "../../../../index.js";
-import {
-  openTranslateModal,
-  closeTranslateModal,
-} from "./Modals/ModalTranslate.js";
-import { openRotateModal, closeRotateModal } from "./Modals/ModalRotate.js";
-
-import { openScaleModal, closeScaleModal } from "./Modals/ModalScale.js";
+import { openTranslateModal } from "./Modals/ModalTranslate.js";
+import { openRotateModal } from "./Modals/ModalRotate.js";
+import { openScaleModal } from "./Modals/ModalScale.js";
 
 function getNumberOfPickedMeshes() {
   var numberOfPickedMeshes = 0;
@@ -19,14 +15,14 @@ function getNumberOfPickedMeshes() {
   return numberOfPickedMeshes;
 }
 
-export async function getThePickedMesh() {
-  var pickedMesh;
+export async function getThePickedMeshes() {
+  var pickedMeshes = [];
   scene.meshes.forEach((mesh) => {
     if (mesh.showBoundingBox) {
-      pickedMesh = mesh;
+      pickedMeshes.push(mesh);
     }
   });
-  return pickedMesh;
+  return pickedMeshes;
 }
 
 export let gizmo;
@@ -41,16 +37,14 @@ const transformMeshBtnHandler = (e, Action) => {
     return 0;
   }
   if (getNumberOfPickedMeshes() === 0) {
-    alert("please select a mesh");
-    return 0;
-  }
-  if (getNumberOfPickedMeshes() > 1) {
-    alert("please select only one mesh");
+    alert("please select at least one mesh");
     return 0;
   }
 
-  getThePickedMesh().then((selectedMesh) => {
+  getThePickedMeshes().then((selectedMeshes) => {
     var utilLayer = new BABYLON.UtilityLayerRenderer(scene);
+
+    let selectedMesh = selectedMeshes.length === 1 ? selectedMeshes[0] : null;
 
     // One action at a time
     if (gizmo) {
@@ -58,44 +52,42 @@ const transformMeshBtnHandler = (e, Action) => {
     }
     // Cancel Button
 
+    let PreviousPositions = [];
+
     switch (Action) {
       case "translation":
-        xt = selectedMesh.position.x;
-        yt = selectedMesh.position.y;
-        zt = selectedMesh.position.z;
+        if (selectedMesh !== null) {
+          xt = selectedMesh.position.x;
+          yt = selectedMesh.position.y;
+          zt = selectedMesh.position.z;
+        } else {
+          selectedMeshes.forEach((mesh) => {
+            PreviousPositions.push({
+              meshId: mesh.id,
+              x: mesh.position.x,
+              y: mesh.position.y,
+              z: mesh.position.z,
+            });
+          });
+        }
 
-        // closeRotateModal(e, xr, yr, zr);
-        // closeScaleModal(e, xs, ys, zs);
-
-        gizmo = new BABYLON.PositionGizmo(utilLayer);
-        gizmo.attachedMesh = null;
-        gizmo.updateGizmoRotationToMatchAttachedMesh = false;
-        gizmo.updateGizmoPositionToMatchAttachedMesh = true;
-        gizmo.snapDistance = 0.1;
-
-        openTranslateModal(e, selectedMesh, gizmo).then(
+        openTranslateModal(e, selectedMeshes).then(
           (resolve) => {
             console.log(resolve);
-            console.log(
-              "Current Position : ",
-              selectedMesh.position.x,
-              selectedMesh.position.y,
-              selectedMesh.position.z
-            );
-            gizmo.attachedMesh = null;
           },
           (reject) => {
-            selectedMesh.position.x = xt;
-            selectedMesh.position.y = yt;
-            selectedMesh.position.z = zt;
-            gizmo.attachedMesh = null;
-            console.log(reject);
-            console.log(
-              "Current Position : ",
-              selectedMesh.position.x,
-              selectedMesh.position.y,
-              selectedMesh.position.z
-            );
+            if (selectedMesh !== null) {
+              selectedMesh.position.x = xt;
+              selectedMesh.position.y = yt;
+              selectedMesh.position.z = zt;
+            } else {
+              PreviousPositions.forEach((meshPositionObject) => {
+                let mesh = scene.getMeshById(meshPositionObject.meshId);
+                mesh.position.x = meshPositionObject.x;
+                mesh.position.y = meshPositionObject.y;
+                mesh.position.z = meshPositionObject.z;
+              });
+            }
           }
         );
 
