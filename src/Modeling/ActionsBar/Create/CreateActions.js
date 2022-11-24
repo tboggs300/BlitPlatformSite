@@ -20,6 +20,7 @@ import {} from "./Modals/ModalCostumizedCube.js";
 // Upload STL File ------------------------------------//
 export function loadMesh(fileName, url, extension, s) {
   BABYLON.Scene;
+  let uniqueId = Date.now().toString();
   BABYLON.SceneLoader.ImportMesh(
     "",
     "",
@@ -28,7 +29,7 @@ export function loadMesh(fileName, url, extension, s) {
     function (newMeshes) {
       const mesh = newMeshes[0];
       mesh.name = fileName;
-      mesh.id = fileName;
+      mesh.id = uniqueId;
       mesh.scaling = new BABYLON.Vector3(s, s, s);
       mesh.rotation = new BABYLON.Vector3(0, 0, 0);
       mesh.position = new BABYLON.Vector3(0, 0, 0);
@@ -39,7 +40,13 @@ export function loadMesh(fileName, url, extension, s) {
       if (getNumberOfPickedMeshes() > 0) {
         mesh.visibility = 0.5;
       }
-      const objectCompoenetContainer = createComponent(mesh, "meshIcon", scene);
+
+      const objectCompoenetContainer = createComponent(
+        mesh,
+        "meshIcon",
+        uniqueId,
+        scene
+      );
       $(".sidebar-elements").append(objectCompoenetContainer);
       frameCamera(1.5, mesh);
 
@@ -106,7 +113,7 @@ export function createShape(meshType, uniqueId, shapeObj) {
 
       // mesh.material = new BABYLON.NormalMaterial(meshType, scene);
 
-      mesh.id = `${uniqueId}`;
+      mesh.id = uniqueId;
       mesh.material = chooseMaterial(sphereObj.material, scene);
 
       objectCompoenetContainer = createComponent(
@@ -132,7 +139,7 @@ export function createShape(meshType, uniqueId, shapeObj) {
       mesh.position.z =
         (parseFloat(cubeObj.zmax) + parseFloat(cubeObj.zmin)) / 2;
 
-      mesh.id = `${uniqueId}`;
+      mesh.id = uniqueId;
       mesh.material = chooseMaterial(cubeObj.material, scene);
 
       // frameCamera(1.5, mesh);
@@ -160,7 +167,7 @@ export function createShape(meshType, uniqueId, shapeObj) {
         scene
       );
 
-      mesh.id = `${uniqueId}`;
+      mesh.id = uniqueId;
       mesh.material = chooseMaterial(cylinderObj.material, scene);
 
       objectCompoenetContainer = createComponent(
@@ -197,7 +204,7 @@ const addSphere = (e) => {
     (resolve) => {
       $(".empty-scene").remove();
       let sphereObj = resolve;
-      let uniqueId = Date.now();
+      let uniqueId = Date.now().toString();
       createShape("sphere", uniqueId, sphereObj);
     },
     (reject) => {
@@ -213,7 +220,7 @@ const addCube = (e) => {
     (resolve) => {
       $(".empty-scene").remove();
       let cubeObj = resolve;
-      let uniqueId = Date.now();
+      let uniqueId = Date.now().toString();
       createShape("cube", uniqueId, cubeObj);
     },
     (reject) => {
@@ -229,7 +236,7 @@ const addCylinder = (e) => {
     (resolve) => {
       $(".empty-scene").remove();
       let cylinderObj = resolve;
-      let uniqueId = Date.now();
+      let uniqueId = Date.now().toString();
       createShape("cylinder", uniqueId, cylinderObj);
     },
     (reject) => {
