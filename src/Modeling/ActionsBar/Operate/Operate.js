@@ -14,13 +14,18 @@ unionBtn.addEventListener("click", (e) => {
     return 0;
   } else {
     getThePickedMeshes().then((pickedMeshes) => {
-      const newMesh = BABYLON.Mesh.MergeMeshes(pickedMeshes, false);
+      let uniqueId = Date.now().toString();
+      const newMesh = BABYLON.Mesh.MergeMeshes(pickedMeshes, true);
       var objectCompoenetContainer = createComponent(
         newMesh,
         "cubeIcon",
+        uniqueId,
         scene
       );
       $(".sidebar-elements").append(objectCompoenetContainer);
+      pickedMeshes.forEach((mesh) => {
+        $("#" + mesh.id).remove();
+      });
     });
   }
 });
