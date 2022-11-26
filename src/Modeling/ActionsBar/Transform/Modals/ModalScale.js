@@ -7,58 +7,52 @@ const scaleX = document.querySelector("#scale-x-input");
 const scaleY = document.querySelector("#scale-y-input");
 const scaleZ = document.querySelector("#scale-z-input");
 
-let currentMesh = null;
+var selectedMeshesInScene;
 
-export async function openScaleModal(e, selectedMesh, gizmo) {
-  currentMesh = selectedMesh;
-  scaleX.value = selectedMesh.scaling.x;
-  scaleY.value = selectedMesh.scaling.y;
-  scaleZ.value = selectedMesh.scaling.z;
-
-  gizmo.xGizmo.onSnapObservable.add((event) => {
-    scaleX.value = selectedMesh.scaling.x;
-  });
-  gizmo.yGizmo.onSnapObservable.add((event) => {
-    scaleY.value = selectedMesh.scaling.y;
-  });
-  gizmo.zGizmo.onSnapObservable.add((event) => {
-    scaleZ.value = selectedMesh.scaling.z;
-  });
-
+export async function openScaleModal(e, selectedMeshes) {
+  // Modal
   e.preventDefault();
   var rect = e.target.getBoundingClientRect();
   modal.style.left = `${rect.left - rect.left / 6}px`;
   modal.style.top = `${rect.top + 40}px`;
   modal.classList.add("is-open");
+
+  selectedMeshesInScene = selectedMeshes;
+  let isMultipleSelect = selectedMeshes.length !== 1; // true if multipe object are selected
+
+  scaleX.value = isMultipleSelect
+    ? 0.0
+    : parseFloat(selectedMeshes[0].scaling.x).toFixed(1);
+  scaleY.value = isMultipleSelect
+    ? 0.0
+    : parseFloat(selectedMeshes[0].scaling.y).toFixed(1);
+  scaleZ.value = isMultipleSelect
+    ? 0.0
+    : parseFloat(selectedMeshes[0].scaling.z).toFixed(1);
+
+  function cleanHandler() {
+    previousCordinates = {
+      x: 0,
+      y: 0,
+      z: 0,
+    };
+    modal.classList.remove("is-open");
+  }
+
   let promise = new Promise((resolve, reject) => {
     modalOkBtn.addEventListener("click", () => {
-      resolve("Scale Applied");
+      cleanHandler();
+      resolve("Translation Applied");
     });
-    modalCancelBtn.addEventListener("click", () =>
-      reject("user cancel action")
-    );
+    modalCancelBtn.addEventListener("click", () => {
+      cleanHandler();
+      reject("user cancel action");
+    });
   });
 
   await promise;
   return promise;
 }
-
-export function closeScaleModal(e, xs, ys, zs) {
-  if (currentMesh !== null) {
-    currentMesh.scaling.x = xs;
-    currentMesh.scaling.y = ys;
-    currentMesh.scaling.z = zs;
-  }
-
-  modal.classList.remove("is-open");
-}
-
-function submitFormHandler() {
-  modal.classList.remove("is-open");
-}
-
-modalCancelBtn.addEventListener("click", closeScaleModal);
-modalOkBtn.addEventListener("click", submitFormHandler);
 
 /* ------------------- Input Evenet Listener ---------------------- */
 
@@ -67,11 +61,29 @@ scaleY.addEventListener("change", updateScaleYInput);
 scaleZ.addEventListener("change", updateScaleZInput);
 
 function updateScaleXInput(e) {
-  currentMesh.scaling.x = parseFloat(e.target.value);
+  updateScaleInput(e, "x");
 }
 function updateScaleYInput(e) {
-  currentMesh.scaling.y = parseFloat(e.target.value);
+  updateScaleInput(e, "y");
 }
 function updateScaleZInput(e) {
-  currentMesh.scaling.z = parseFloat(e.target.value);
+  updateScaleInput(e, "z");
+}
+
+var previousCordinates = {
+  x: 0,
+  y: 0,
+  z: 0,
+};
+
+function updateScaleInput(e, axis) {
+  selectedMeshesInScene.forEach((mesh) => {
+    if (selectedMeshesInScene.length === 1) {
+      mesh.scaling[axis] = e.target.valueAsNumber;
+      return 0;
+    } else {
+      mesh.scaling[axis] += e.target.valueAsNumber - previousCordinates[axis];
+    }
+  });
+  previousCordinates[axis] = e.target.valueAsNumber;
 }

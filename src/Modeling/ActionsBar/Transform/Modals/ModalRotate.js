@@ -7,62 +7,52 @@ const rotateX = document.querySelector("#rotate-x-input");
 const rotateY = document.querySelector("#rotate-y-input");
 const rotateZ = document.querySelector("#rotate-z-input");
 
-let currentMesh = null;
+let selectedMeshesInScene;
 
-export async function openRotateModal(e, selectedMesh, gizmo) {
-  currentMesh = selectedMesh;
-
-  rotateX.value = parseInt(currentMesh.rotation.x * (180 / Math.PI));
-  rotateY.value = parseInt(currentMesh.rotation.y * (180 / Math.PI));
-  rotateZ.value = parseInt(currentMesh.rotation.z * (180 / Math.PI));
-
+export async function openRotateModal(e, selectedMeshes) {
   e.preventDefault();
   var rect = e.target.getBoundingClientRect();
   modal.style.left = `${rect.left - rect.left / 6}px`;
   modal.style.top = `${rect.top + 40}px`;
   modal.classList.add("is-open");
+
+  selectedMeshesInScene = selectedMeshes;
+
+  let isMultipleSelect = selectedMeshes.length !== 1; // true if multipe object are selected
+
+  rotateX.value = isMultipleSelect
+    ? 0
+    : parseInt(selectedMeshes[0].rotation.x * (180 / Math.PI));
+  rotateY.value = isMultipleSelect
+    ? 0
+    : parseInt(selectedMeshes[0].rotation.y * (180 / Math.PI));
+  rotateZ.value = isMultipleSelect
+    ? 0
+    : parseInt(selectedMeshes[0].rotation.z * (180 / Math.PI));
+
+  function cleanHandler() {
+    previousCordinates = {
+      x: 0,
+      y: 0,
+      z: 0,
+    };
+    modal.classList.remove("is-open");
+  }
+
   let promise = new Promise((resolve, reject) => {
     modalOkBtn.addEventListener("click", () => {
+      cleanHandler();
       resolve("Rotation Applied");
     });
-    modalCancelBtn.addEventListener("click", () =>
-      reject("user cancel action")
-    );
-  });
-
-  //  -------- Transform With Gizmos ------------ //
-  gizmo.xGizmo.onSnapObservable.add((event) => {
-    rotateX.value = parseInt(gizmo.xGizmo.angle * (180 / Math.PI));
-  });
-
-  gizmo.yGizmo.onSnapObservable.add((event) => {
-    rotateY.value = parseInt(gizmo.yGizmo.angle * (180 / Math.PI));
-  });
-
-  gizmo.zGizmo.onSnapObservable.add((event) => {
-    rotateZ.value = parseInt(gizmo.zGizmo.angle * (180 / Math.PI));
+    modalCancelBtn.addEventListener("click", () => {
+      cleanHandler();
+      reject("user cancel action");
+    });
   });
 
   await promise;
   return promise;
 }
-
-export function closeRotateModal(e, xr, yr, zr) {
-  if (currentMesh !== null) {
-    currentMesh.rotation.x = xr;
-    currentMesh.rotation.y = yr;
-    currentMesh.rotation.z = zr;
-    console.log(xr, yr, zr);
-  }
-  modal.classList.remove("is-open");
-}
-
-function submitFormHandler() {
-  modal.classList.remove("is-open");
-}
-
-modalCancelBtn.addEventListener("click", closeRotateModal);
-modalOkBtn.addEventListener("click", submitFormHandler);
 
 /* ------------------- Input Evenet Listener ---------------------- */
 
@@ -71,11 +61,30 @@ rotateY.addEventListener("change", updateRotateYInput);
 rotateZ.addEventListener("change", updateRotateZInput);
 
 function updateRotateXInput(e) {
-  currentMesh.rotation.x = parseInt(e.target.value) / (180 / Math.PI);
+  updateRotationInput(e, "x");
 }
 function updateRotateYInput(e) {
-  currentMesh.rotation.y = parseInt(e.target.value) / (180 / Math.PI);
+  updateRotationInput(e, "y");
 }
 function updateRotateZInput(e) {
-  currentMesh.rotation.z = parseInt(e.target.value) / (180 / Math.PI);
+  updateRotationInput(e, "z");
+}
+
+var previousCordinates = {
+  x: 0,
+  y: 0,
+  z: 0,
+};
+
+function updateRotationInput(e, axis) {
+  selectedMeshesInScene.forEach((mesh) => {
+    if (selectedMeshesInScene.length === 1) {
+      mesh.rotation[axis] = e.target.valueAsNumber / (180 / Math.PI);
+      return 0;
+    } else {
+      mesh.rotation[axis] +=
+        (e.target.valueAsNumber - previousCordinates[axis]) / (180 / Math.PI);
+    }
+  });
+  previousCordinates[axis] = e.target.valueAsNumber;
 }
