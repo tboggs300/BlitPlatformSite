@@ -13,8 +13,6 @@ import {
   closeCylinderModal,
 } from "./Modals/ModalCostumizedCylinder.js";
 
-import { actions, undos } from "../../../../index.js";
-
 // var ListOfMeshes = {};
 
 // Upload STL File ------------------------------------//
