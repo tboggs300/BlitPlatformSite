@@ -1,5 +1,5 @@
 import { createShape, loadMesh } from "../ActionsBar/Create/CreateActions.js";
-import { scene } from "../../../index.js";
+import { actions, scene } from "../../../index.js";
 
 export function decrementCounter(meshType) {
   switch (meshType) {
@@ -46,6 +46,20 @@ $(document).ready(function () {
             const meshId = actionObj.meshId;
             createShape(meshType, meshId);
           }
+          break;
+
+        case "transform":
+          actionObj.PreviousPositions.forEach((prv) => {
+            console.log(scene.getMeshById(prv.meshId));
+            let mesh = scene.getMeshById(prv.meshId);
+            console.log(actionObj.type);
+            mesh[actionObj.type].x = prv.x;
+            mesh[actionObj.type].y = prv.y;
+            mesh[actionObj.type].z = prv.z;
+          });
+
+          // actionObj.PreviousPositionsv
+          actions.splice(actions.length - 1, 1);
           break;
         default:
           console.log("default");

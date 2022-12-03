@@ -11,6 +11,8 @@ import "./src/Modeling/ActionsBar/Transform/TransformActions.js";
 import "./src/Modeling/ActionsBar/Operate/Operate.js";
 import "./src/Modeling/UndoRedo/Redo.js";
 
+export var actions = []; // Redo - Ctrl Z
+
 const canvas = document.querySelectorAll("canvas")[0];
 canvas.style.width = "100%";
 canvas.style.height = "100%";

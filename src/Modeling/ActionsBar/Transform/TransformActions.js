@@ -4,6 +4,7 @@ import { scene } from "../../../../index.js";
 import { openTranslateModal } from "./Modals/ModalTranslate.js";
 import { openRotateModal } from "./Modals/ModalRotate.js";
 import { openScaleModal } from "./Modals/ModalScale.js";
+import { actions } from "../../../../index.js";
 
 function getNumberOfPickedMeshes() {
   var numberOfPickedMeshes = 0;
@@ -40,6 +41,8 @@ const transformMeshBtnHandler = (e, Action) => {
       case "translation":
         // Save Previous Position
         let PreviousPositions = [];
+        let meshIds = selectedMeshes.map((mesh) => mesh.id);
+        console.log(meshIds);
         selectedMeshes.forEach((mesh) => {
           PreviousPositions.push({
             meshId: mesh.id,
@@ -52,6 +55,11 @@ const transformMeshBtnHandler = (e, Action) => {
         openTranslateModal(e, selectedMeshes).then(
           (resolve) => {
             console.log(resolve);
+            actions.push({
+              action: "transform",
+              type: "position",
+              PreviousPositions: PreviousPositions,
+            });
           },
           (reject) => {
             console.log(reject);
@@ -80,6 +88,11 @@ const transformMeshBtnHandler = (e, Action) => {
         openRotateModal(e, selectedMeshes).then(
           (resolve) => {
             console.log(resolve);
+            actions.push({
+              action: "transform",
+              type: "rotation",
+              PreviousPositions: PreviousRotations,
+            });
           },
           (reject) => {
             console.log(reject);
@@ -108,6 +121,11 @@ const transformMeshBtnHandler = (e, Action) => {
         openScaleModal(e, selectedMeshes).then(
           (resolve) => {
             console.log(resolve);
+            actions.push({
+              action: "transform",
+              type: "scaling",
+              PreviousPositions: PreviousScale,
+            });
           },
           (reject) => {
             console.log(reject);

@@ -13,7 +13,7 @@ import {
   closeCylinderModal,
 } from "./Modals/ModalCostumizedCylinder.js";
 
-import {} from "./Modals/ModalCostumizedCube.js";
+import { actions } from "../../../../index.js";
 
 // var ListOfMeshes = {};
 
