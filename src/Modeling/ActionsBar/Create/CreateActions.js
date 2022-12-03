@@ -13,7 +13,7 @@ import {
   closeCylinderModal,
 } from "./Modals/ModalCostumizedCylinder.js";
 
-import { actions } from "../../../../index.js";
+import { actions, undos } from "../../../../index.js";
 
 // var ListOfMeshes = {};
 
@@ -50,13 +50,13 @@ export function loadMesh(fileName, url, extension, s) {
       $(".sidebar-elements").append(objectCompoenetContainer);
       frameCamera(1.5, mesh);
 
-      actions.push({
-        mesh: [url, mesh],
-        meshId: fileName,
-        action: "add",
-        objectCompoenetContainer: objectCompoenetContainer,
-        type: "mesh",
-      });
+      // actions.push({
+      //   mesh: [url, mesh],
+      //   meshId: fileName,
+      //   action: "add",
+      //   objectCompoenetContainer: objectCompoenetContainer,
+      //   type: "mesh",
+      // });
     },
     null,
     null,
@@ -108,6 +108,7 @@ export function createShape(meshType, uniqueId, shapeObj) {
         },
         scene
       );
+      console.log("mesh ; ", mesh);
 
       // mesh.segments = 10;
 
@@ -126,19 +127,15 @@ export function createShape(meshType, uniqueId, shapeObj) {
       break;
     case "cube":
       let cubeObj = shapeObj;
-      mesh = BABYLON.MeshBuilder.CreateBox(cubeObj.name, {}, scene);
-
-      mesh.scaling.x = cubeObj.xmax - cubeObj.xmin;
-      mesh.scaling.y = cubeObj.ymax - cubeObj.ymin;
-      mesh.scaling.z = cubeObj.zmax - cubeObj.zmin;
-
-      mesh.position.x =
-        (parseFloat(cubeObj.xmax) + parseFloat(cubeObj.xmin)) / 2;
-      mesh.position.y =
-        (parseFloat(cubeObj.ymax) + parseFloat(cubeObj.ymin)) / 2;
-      mesh.position.z =
-        (parseFloat(cubeObj.zmax) + parseFloat(cubeObj.zmin)) / 2;
-
+      mesh = BABYLON.MeshBuilder.CreateBox(
+        cubeObj.name,
+        {
+          height: cubeObj.ymax - cubeObj.ymin,
+          width: cubeObj.xmax - cubeObj.xmin,
+          depth: cubeObj.zmax - cubeObj.zmin,
+        },
+        scene
+      );
       mesh.id = uniqueId;
       mesh.material = chooseMaterial(cubeObj.material, scene);
 
@@ -183,13 +180,13 @@ export function createShape(meshType, uniqueId, shapeObj) {
 
   $(".sidebar-elements").append(objectCompoenetContainer);
 
-  actions.push({
-    mesh: mesh,
-    meshId: uniqueId,
-    action: "add",
-    objectCompoenetContainer: objectCompoenetContainer,
-    type: meshType,
-  });
+  // actions.push({
+  //   mesh: mesh,
+  //   meshId: uniqueId,
+  //   action: "add",
+  //   objectCompoenetContainer: objectCompoenetContainer,
+  //   type: meshType,
+  // });
 
   if (getNumberOfPickedMeshes() > 0) {
     mesh.visibility = 0.5;

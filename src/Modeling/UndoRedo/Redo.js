@@ -1,5 +1,5 @@
 import { createShape, loadMesh } from "../ActionsBar/Create/CreateActions.js";
-import { actions, scene } from "../../../index.js";
+import { actions, undos, scene } from "../../../index.js";
 
 export function decrementCounter(meshType) {
   switch (meshType) {
@@ -28,6 +28,7 @@ $(document).ready(function () {
       let actionObj = actions[actions.length - 1];
       switch (actionObj.action) {
         case "add":
+          undos.unshift(actionObj);
           $("#" + actionObj.objectCompoenetContainer.id).remove();
           if (actionObj.type === "mesh") {
             actionObj.mesh[1].dispose();
@@ -36,8 +37,10 @@ $(document).ready(function () {
             decrementCounter(actionObj.type);
           }
           actions.splice(actions.length - 1, 1);
+          console.log("Undos List : ", undos);
           break;
         case "delete":
+          undos.unshift(actionObj);
           actions.splice(actions.length - 1, 1);
           if (actionObj.type === "mesh") {
             loadMesh(actionObj.meshId, actionObj.mesh[0], "stl", 1);
@@ -47,8 +50,9 @@ $(document).ready(function () {
             createShape(meshType, meshId);
           }
           break;
-
         case "transform":
+          undos.unshift(actionObj);
+
           actionObj.PreviousPositions.forEach((prv) => {
             console.log(scene.getMeshById(prv.meshId));
             let mesh = scene.getMeshById(prv.meshId);
@@ -57,9 +61,9 @@ $(document).ready(function () {
             mesh[actionObj.type].y = prv.y;
             mesh[actionObj.type].z = prv.z;
           });
-
-          // actionObj.PreviousPositionsv
           actions.splice(actions.length - 1, 1);
+          console.log("Undos List : ", undos);
+          console.log("Redos List : ", actions);
           break;
         default:
           console.log("default");

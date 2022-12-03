@@ -41,6 +41,7 @@ const transformMeshBtnHandler = (e, Action) => {
       case "translation":
         // Save Previous Position
         let PreviousPositions = [];
+        let CurrentPositions = [];
         let meshIds = selectedMeshes.map((mesh) => mesh.id);
         console.log(meshIds);
         selectedMeshes.forEach((mesh) => {
@@ -55,10 +56,23 @@ const transformMeshBtnHandler = (e, Action) => {
         openTranslateModal(e, selectedMeshes).then(
           (resolve) => {
             console.log(resolve);
+            // current positions
+            selectedMeshes.forEach((mesh) => {
+              CurrentPositions.push({
+                meshId: mesh.id,
+                x: mesh.position.x,
+                y: mesh.position.y,
+                z: mesh.position.z,
+              });
+            });
+
+            console.log("current pos : ", CurrentPositions);
+            // actions
             actions.push({
               action: "transform",
               type: "position",
               PreviousPositions: PreviousPositions,
+              CurrentPositions: CurrentPositions,
             });
           },
           (reject) => {
@@ -76,6 +90,7 @@ const transformMeshBtnHandler = (e, Action) => {
 
       case "rotation":
         let PreviousRotations = [];
+        let CurrentRotations = [];
         selectedMeshes.forEach((mesh) => {
           PreviousRotations.push({
             meshId: mesh.id,
@@ -88,10 +103,22 @@ const transformMeshBtnHandler = (e, Action) => {
         openRotateModal(e, selectedMeshes).then(
           (resolve) => {
             console.log(resolve);
+
+            // current rotations
+            selectedMeshes.forEach((mesh) => {
+              CurrentRotations.push({
+                meshId: mesh.id,
+                x: mesh.rotation.x,
+                y: mesh.rotation.y,
+                z: mesh.rotation.z,
+              });
+            });
+
             actions.push({
               action: "transform",
               type: "rotation",
               PreviousPositions: PreviousRotations,
+              CurrentPositions: CurrentRotations,
             });
           },
           (reject) => {
@@ -109,6 +136,7 @@ const transformMeshBtnHandler = (e, Action) => {
 
       case "scaling":
         let PreviousScale = [];
+        let CurrentScale = [];
         selectedMeshes.forEach((mesh) => {
           PreviousScale.push({
             meshId: mesh.id,
@@ -121,10 +149,22 @@ const transformMeshBtnHandler = (e, Action) => {
         openScaleModal(e, selectedMeshes).then(
           (resolve) => {
             console.log(resolve);
+
+            // current scale
+            selectedMeshes.forEach((mesh) => {
+              CurrentScale.push({
+                meshId: mesh.id,
+                x: mesh.scaling.x,
+                y: mesh.scaling.y,
+                z: mesh.scaling.z,
+              });
+            });
+
             actions.push({
               action: "transform",
               type: "scaling",
               PreviousPositions: PreviousScale,
+              CurrentPositions: CurrentScale,
             });
           },
           (reject) => {
