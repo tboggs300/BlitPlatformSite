@@ -1,5 +1,6 @@
 import { getNumberOfPickedMeshes } from "../ActionsBar/Create/CreateActions.js";
 import { createContainer } from "./Collection.js";
+import { selectedMeshes } from "./ObjectComponent.js";
 
 export const chooseMaterial = (materialStr, scene) => {
   var material;
@@ -173,32 +174,16 @@ const createObjectContextMenu = (mesh, objectCompoenetContainer, scene) => {
     $("#" + objectCompoenetContainer.id).remove();
     mesh.dispose();
 
-    let meshName = mesh.name;
-    let numberPattern = /\d+/;
-    let wordPattern = /[^0-9]+/;
-    let meshId = numberPattern.exec(meshName)[0];
-    meshId = parseInt(meshId); // get mesh id from mesh name
-    let meshType = wordPattern.exec(meshName)[0];
-
-    actions.push({
-      mesh: mesh,
-      meshId: meshId,
-      action: "delete",
-      objectCompoenetContainer: objectCompoenetContainer,
-      type: meshType,
-    });
-
-    console.log(actions);
-
     // When the selected mesh is deleted -> turn visibility of the other meshes to 1
-    if (getNumberOfPickedMeshes() == 0) {
+    console.log(selectedMeshes.length);
+    if (selectedMeshes.length == 0) {
       scene.meshes.forEach((mesh) => {
         mesh.visibility = 1;
       });
     }
 
     // When we delete the last mesh
-    if (scene.meshes == 0) {
+    if (scene.meshes.length == 1) {
       const emptyScene = document.createElement("p");
       emptyScene.className = "empty-scene";
       emptyScene.innerText = "Empty Scene";
@@ -216,25 +201,7 @@ const createObjectContextMenu = (mesh, objectCompoenetContainer, scene) => {
     assetContainer.appendChild(objectCompoenetContainer);
   });
 
-  // ---------------- Modify Width and height ---------------
-  const itemModifyDimensions = document.createElement("li");
-  itemModifyDimensions.className = `item modifyItem`;
-  const modifyIcon = document.createElement("i");
-  modifyIcon.className = "icon modifyIcon";
-  const modifySpan = document.createElement("span");
-  modifySpan.innerText = "Size";
-  itemModifyDimensions.appendChild(modifyIcon);
-  itemModifyDimensions.appendChild(modifySpan);
-
-  itemModifyDimensions.addEventListener("click", () => {
-    // Add Input handling
-    const xScaling = 2; // get scaling in X from input
-    const yScaling = 3; // get scaling in Y from input
-    const zScaling = 4; // get scaling in Z from input
-    const scaling = new BABYLON.Vector3(xScaling, yScaling, zScaling);
-    mesh.scaling = scaling; // for scaling
-    // mesh.rotation = rotation // for rotation
-  });
+  // ---------------- Rename Object ---------------
 
   // Append the two childs to menu
   menu.appendChild(itemMaterial);
