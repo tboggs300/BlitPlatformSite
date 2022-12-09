@@ -172,6 +172,8 @@ const createObjectContextMenu = (mesh, objectCompoenetContainer, scene) => {
 
   itemDelete.addEventListener("click", () => {
     $("#" + objectCompoenetContainer.id).remove();
+    let meshIndex = selectedMeshes.indexOf(mesh);
+    selectedMeshes.splice(meshIndex, 1);
     mesh.dispose();
 
     // When the selected mesh is deleted -> turn visibility of the other meshes to 1
