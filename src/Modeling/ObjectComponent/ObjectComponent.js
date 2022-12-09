@@ -1,8 +1,8 @@
 import createObjectContextMenu from "./ContextMenu.js";
 import { getNumberOfPickedMeshes } from "../ActionsBar/Create/CreateActions.js";
-
 import "./Collection.js";
-// import { scene } from "../../index.js";
+
+export let selectedMeshes = [];
 
 export default function createComponent(mesh, meshIcon, uniqueId, scene) {
   const objectCompoenetContainer = document.createElement("div");
@@ -56,21 +56,16 @@ export default function createComponent(mesh, meshIcon, uniqueId, scene) {
   objectCompoenetContainer.addEventListener("click", (event) => {
     // When user unselect a mesh
     if (mesh.showBoundingBox) {
-      // Bounding Box and visibility
       mesh.showBoundingBox = false;
       if (event.ctrlKey == false) {
         scene.meshes.forEach((mesh) => {
           mesh.visibility = 1;
         });
+        let meshIndex = selectedMeshes.indexOf(mesh);
+        selectedMeshes.splice(meshIndex, 1);
       }
-
-      // Highlights 3D Object
-      //   ListOfMeshes[mesh.id].isSelected = false;
-      // ListOfMeshes.forEach();
-      // jQuery.each(ListOfMeshes, function (index, value) {
-      //   console.log(value);
-      // });
     }
+
     // When user select a mesh
     else {
       if (event.ctrlKey == false) {
@@ -78,11 +73,14 @@ export default function createComponent(mesh, meshIcon, uniqueId, scene) {
           mesh.showBoundingBox = false;
           mesh.visibility = 0.5;
         });
+        selectedMeshes = [];
       }
       mesh.showBoundingBox = true;
       mesh.visibility = 1;
+      selectedMeshes.push(mesh);
       //   ListOfMeshes[mesh.id].isSelected = true;
     }
+    console.log("selected meshes : ", selectedMeshes);
 
     scene.meshes.forEach((mesh) => {
       // If no mesh is selected
@@ -97,14 +95,6 @@ export default function createComponent(mesh, meshIcon, uniqueId, scene) {
         mesh.visibility = 0.5;
       }
     });
-
-    // objectCompoenetContainer.addEventListener("drop", (ev) => {
-    //   ev.preventDefault();
-    //   alert("you cant drag here");
-    // });
-
-    // object componenet highlight
-    // console.log(Object.keys(ListOfMeshes).length);
   });
 
   // ---------------- Right Click Event - Object Context Menu ------------------
