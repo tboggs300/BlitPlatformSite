@@ -126,6 +126,11 @@ export function createShape(meshType, uniqueId, shapeObj) {
     case "cube":
       let cubeObj = shapeObj;
       mesh = BABYLON.MeshBuilder.CreateBox(cubeObj.name, {}, scene);
+
+      mesh.scaling.x = cubeObj.xmax - cubeObj.xmin;
+      mesh.scaling.y = cubeObj.ymax - cubeObj.ymin;
+      mesh.scaling.z = cubeObj.zmax - cubeObj.zmin;
+
       mesh.position.x =
         (parseFloat(cubeObj.xmax) + parseFloat(cubeObj.xmin)) / 2;
       mesh.position.y =
@@ -134,8 +139,6 @@ export function createShape(meshType, uniqueId, shapeObj) {
         (parseFloat(cubeObj.zmax) + parseFloat(cubeObj.zmin)) / 2;
       mesh.id = uniqueId;
       mesh.material = chooseMaterial(cubeObj.material, scene);
-
-      // frameCamera(1.5, mesh);
 
       objectCompoenetContainer = createComponent(
         mesh,
