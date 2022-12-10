@@ -34,7 +34,7 @@ const createObjectContextMenu = (mesh, objectCompoenetContainer, scene) => {
   const menu = document.createElement("ul");
   menu.className = "menu";
 
-  // ---------------- Material --------------
+  // -------------------------------------- Material ------------------------------------------
   const itemMaterial = document.createElement("li");
   itemMaterial.className = "item material";
 
@@ -163,7 +163,7 @@ const createObjectContextMenu = (mesh, objectCompoenetContainer, scene) => {
   itemMaterial.appendChild(arrowIcon);
   itemMaterial.appendChild(materialMenu);
 
-  // --------------- Delete ---------------
+  // ------------------------------------ Delete ---------------------------------------
   const itemDelete = document.createElement("li");
   itemDelete.className = `item deleteItem ${mesh.id}`;
   const deleteSpan = document.createElement("span");
@@ -177,7 +177,6 @@ const createObjectContextMenu = (mesh, objectCompoenetContainer, scene) => {
     mesh.dispose();
 
     // When the selected mesh is deleted -> turn visibility of the other meshes to 1
-    console.log(selectedMeshes.length);
     if (selectedMeshes.length == 0) {
       scene.meshes.forEach((mesh) => {
         mesh.visibility = 1;
@@ -203,9 +202,20 @@ const createObjectContextMenu = (mesh, objectCompoenetContainer, scene) => {
     assetContainer.appendChild(objectCompoenetContainer);
   });
 
-  // ---------------- Rename Object ---------------
+  // ------------------------------- Rename Object -----------------------------------
+  const itemRename = document.createElement("li");
+  itemRename.className = `item ${mesh.id}`;
+  const renameSpan = document.createElement("span");
+  renameSpan.innerText = "Rename";
+  itemRename.appendChild(renameSpan);
+  itemRename.addEventListener("click", (e) => {
+    // e.stopPropagation();
+    let objName = objectCompoenetContainer.childNodes[1];
+    objName.contentEditable = true;
+  });
 
   // Append the two childs to menu
+  menu.appendChild(itemRename);
   menu.appendChild(itemMaterial);
   menu.appendChild(itemCreateContainer);
   menu.appendChild(itemDelete);

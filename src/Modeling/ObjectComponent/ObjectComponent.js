@@ -30,6 +30,36 @@ export default function createComponent(mesh, meshIcon, uniqueId, scene) {
   objIcon.className = `objIcon ${meshIcon} objComp`;
   const objName = document.createElement("p");
   objName.innerText = mesh.name;
+
+  objName.addEventListener("click", (e) => {
+    // e.stopPropagation();
+    objName.contentEditable = true;
+    setTimeout(function () {
+      if (document.activeElement !== objName) {
+        objName.contentEditable = false;
+      }
+    }, 300);
+    // Rename when clicking on enter
+    objName.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        objName.contentEditable = false;
+      }
+    });
+    // Rename the mesh in the scene
+    objName.addEventListener("input", (e) => {
+      mesh.name = e.target.innerText;
+    });
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target !== objName) {
+      objName.contentEditable = false;
+    }
+  });
+  objName.addEventListener("click", (e) => {
+    console.log("objName clicked !!");
+  });
+
   objName.className = "objName objComp";
   objectCompoenetContainer.appendChild(objIcon);
   objectCompoenetContainer.appendChild(objName);
